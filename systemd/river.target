@@ -1,0 +1,12 @@
+[Unit]
+Description=Services started after river is opened
+Documentation=man:systemd.special(7)
+
+# We need basic services already up
+Requires=basic.target
+
+# BindsTo + After means that if graphical-session isn't on
+# then this unit can't be run. If graphical-session stops,
+# so does this.
+BindsTo=graphical-session.target
+After=graphical-session.target

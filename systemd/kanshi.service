@@ -1,0 +1,9 @@
+[Unit]
+Description=Kanshi - Screen Output Handler
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanshi
+
+[Install]
+WantedBy=river.target

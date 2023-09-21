@@ -1,0 +1,9 @@
+[Unit]
+Description=Background for Wayland
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sh -c 'swaybg -m fill -i ~/Desktop/back.png'
+
+[Install]
+WantedBy=river.target
