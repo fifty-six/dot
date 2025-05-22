@@ -1,7 +1,7 @@
 [helpers]
 
 [default]
-depends = ["zsh", "nvim", "git", "systemd"]
+depends = ["zsh", "nvim", "git", "systemd", "foot", "atuin", "kitty"]
 
 [default.files]
 
@@ -9,9 +9,13 @@ depends = ["zsh", "nvim", "git", "systemd"]
 
 [zsh.files]
 zshrc = "~/.zshrc"
+zimrc = "~/.zimrc"
+
+[atuin.files]
+atuin = "~/.config/atuin/config.toml"
 
 [nvim]
-files.nvim = { target = "~/.config/nvim", type = "symbolic" }
+files.nvim = { target = "~/.config/nvim", type = "symbolic", recurse = false }
 
 [git.files]
 git = "~/.config/git/config"
@@ -21,3 +25,8 @@ latexmkrc = "~/.config/latexmk/latexmkrc"
 
 [systemd.files]
 systemd = "~/.config/systemd/user"
+
+[kitty.files]
+kitty = "~/.config/kitty/kitty.conf"
+
+[foot.files]

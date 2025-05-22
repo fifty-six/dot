@@ -1,0 +1,7 @@
+default-host: https://ntfy.in.fiftysix.dev
+
+subscribe:
+- topic: matrix-reactions
+  command: notify-send "$t" "$m"
+- topic: ha
+  command: notify-send "$t" "$m"

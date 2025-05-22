@@ -18,7 +18,23 @@ snippet template "Basic template" b
 \usepackage{preamble}
 
 \begin{document}
-	$0
+$0
+\end{document}
+endsnippet
+
+snippet hw_template "(Math) homework template" b
+\documentclass{article}
+
+\usepackage{preamble}
+
+\title{HW$1 \\\\ MATH$2}
+\author{Yusuf Bham}
+
+\begin{document}
+
+\maketitle
+
+$3
 \end{document}
 endsnippet
 
@@ -428,6 +444,7 @@ snippet xx "cross" iA
 \times
 endsnippet
 
+context "math()"
 priority 100
 snippet ** "cdot" iA
 \cdot
@@ -499,7 +516,7 @@ endsnippet
 
 context "math()"
 snippet set "set" wA
-\\{$1\\} $0
+\\{$1\\}$0
 endsnippet
 
 snippet || "mid" iA
@@ -585,6 +602,11 @@ snippet case "cases" wA
 \begin{cases}
 	$1
 \end{cases}
+endsnippet
+
+context "math()"
+snippet seq "sequence" wA
+\\{a_n\\}$0
 endsnippet
 
 snippet SI "SI" iA

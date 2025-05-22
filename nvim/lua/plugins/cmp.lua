@@ -1,120 +1,147 @@
-local function border(hl_name)
-    return {
-        { "╭", hl_name },
-        { "─", hl_name },
-        { "╮", hl_name },
-        { "│", hl_name },
-        { "╯", hl_name },
-        { "─", hl_name },
-        { "╰", hl_name },
-        { "│", hl_name },
-    }
-end
+return {
+    -- { "amarakon/nvim-cmp-lua-latex-symbols" },
+    { "hrsh7th/nvim-cmp",
+        -- version = "*",
+        -- dependencies = "friendly-snippets",
+        -- dependencies = "LuaSnip",
+        -- require = "quangnguyen30192/cmp-nvim-ultisnips",
+        dependencies = { "hrsh7th/cmp-omni", "hrsh7th/cmp-nvim-lsp", "kdheepak/cmp-latex-symbols" },
+        init = function()
+            vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+        end,
 
-local cmp = require("cmp")
--- local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+        config = function()
+            local function border(hl_name)
+                return {
+                    { "╭", hl_name },
+                    { "─", hl_name },
+                    { "╮", hl_name },
+                    { "│", hl_name },
+                    { "╯", hl_name },
+                    { "─", hl_name },
+                    { "╰", hl_name },
+                    { "│", hl_name },
+                }
+            end
 
--- require("cmp_nvim_ultisnips").setup{}
+            local cmp = require("cmp")
+            -- local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 
-cmp.setup {
-    window = {
-        completion = {
-            border = border "CmpBorder",
-            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-        },
-        documentation = {
-            border = border "CmpDocBorder",
-        },
-    },
-    -- snippet = {
-    --     -- expand = function(args)
-    --     --     -- require("luasnip").lsp_expand(args.body)
-    --     --     vim.fn["UltiSnips#Anon"](args.body)
-    --     -- end,
-    -- },
-    mapping = {
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
+            -- require("cmp_nvim_ultisnips").setup{}
 
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            default_sources = {
+                { name = "nvim_lsp" },
+                { name = 'mkdnflow' },
+                { name = "ultisnips" },
+                { name = "buffer" },
+                { name = "nvim_lua" },
+                { name = "path" },
+                { name = "omni" },
+                { name = "otter" },
+            }
 
-        ["<C-Space>"] = cmp.mapping.complete(),
+            cmp.setup {
+                window = {
+                    completion = {
+                        border = border "CmpBorder",
+                        winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+                    },
+                    documentation = cmp.config.window.bordered()
+                    -- documentation = {
+                    --     border = border "CmpDocBorder",
+                    -- },
+                },
+                -- snippet = {
+                --     expand = function(args)
+                --         -- require("luasnip").lsp_expand(args.body)
+                --         vim.fn["UltiSnips#Anon"](args.body)
+                --     end,
+                -- },
+                mapping = {
+                    ["<C-p>"] = cmp.mapping.select_prev_item(),
+                    ["<C-n>"] = cmp.mapping.select_next_item(),
 
-        ["<C-e>"] = cmp.mapping.close(),
+                    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
 
-        ["<CR>"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-        },
+                    ["<C-Space>"] = cmp.mapping.complete(),
 
-        -- ["<Tab>"] = cmp.mapping(
-        --   function(fallback)
-        --     cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-        --   end,
-        --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-        -- ),
-        -- ["<S-Tab>"] = cmp.mapping(
-        --   function(fallback)
-        --     cmp_ultisnips_mappings.jump_backwards(fallback)
-        --   end,
-        --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-        -- ),
+                    ["<C-e>"] = cmp.mapping.close(),
 
-        ["<Tab>"] = cmp.mapping(
-            function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                -- elseif require("luasnip").expand_or_jumpable() then
-                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-                else
-                    fallback()
-                end
-            end, { "i", "s", }
-        ),
-        ["<S-Tab>"] = cmp.mapping(
-            function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                -- elseif require("luasnip").jumpable(-1) then
-                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-                else
-                    fallback()
-                end
-            end, { "i", "s", }
-        ),
+                    ["<CR>"] = cmp.mapping.confirm {
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = false,
+                    },
 
-        -- ["<Tab>"] = cmp.mapping(function(fallback)
-        --     if cmp.visible() then
-        --         cmp.select_next_item()
-        --     elseif require("luasnip").expand_or_jumpable() then
-        --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        --     else
-        --         fallback()
-        --     end
-        -- end, {
-        --         "i",
-        --         "s",
-        --     }),
-        -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-        --     if cmp.visible() then
-        --         cmp.select_prev_item()
-        --     elseif require("luasnip").jumpable(-1) then
-        --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-        --     else
-        --         fallback()
-        --     end
-        -- end, {
-        --         "i",
-        --         "s",
-        --     }),
-    },
-    sources = {
-        -- { name = "luasnip" },
-        { name = "ultisnips" },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "nvim_lua" },
-        { name = "path" },
-    }
-}
+                    -- ["<Tab>"] = cmp.mapping(
+                    --   function(fallback)
+                    --     cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+                    --   end,
+                    --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+                    -- ),
+                    -- ["<S-Tab>"] = cmp.mapping(
+                    --   function(fallback)
+                    --     cmp_ultisnips_mappings.jump_backwards(fallback)
+                    --   end,
+                    --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+                    -- ),
+
+                    ["<Tab>"] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_next_item()
+                                -- elseif require("luasnip").expand_or_jumpable() then
+                                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+                            else
+                                fallback()
+                            end
+                        end, { "i", "s", }
+                    ),
+                    ["<S-Tab>"] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_prev_item()
+                                -- elseif require("luasnip").jumpable(-1) then
+                                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+                            else
+                                fallback()
+                            end
+                        end, { "i", "s", }
+                    ),
+
+                    -- ["<Tab>"] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         cmp.select_next_item()
+                --     elseif require("luasnip").expand_or_jumpable() then
+                --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+                --     else
+                --         fallback()
+                --     end
+                -- end, {
+                --         "i",
+                --         "s",
+                --     }),
+                -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         cmp.select_prev_item()
+                --     elseif require("luasnip").jumpable(-1) then
+                --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+                --     else
+                --         fallback()
+                --     end
+                -- end, {
+                --         "i",
+                --         "s",
+                --     }),
+            },
+            sources = { table.unpack(default_sources) }
+        }
+
+            cmp.setup.filetype({ "coq", "rust" }, {
+                sources = {
+                    { name = "latex_symbols", option = { strategy = 0 } },
+                    table.unpack(default_sources)
+                }
+            })
+    end
+} }

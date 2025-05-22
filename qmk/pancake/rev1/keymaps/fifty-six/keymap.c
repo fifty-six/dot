@@ -21,7 +21,7 @@
 #define LAYOUT_plaid_grid LAYOUT_ortho_4x12
 #endif
 
-#define JSB(x) JS_BUTTON##x
+// #define JSB(x) JS_BUTTON##x
 
 
 enum plaid_layers {

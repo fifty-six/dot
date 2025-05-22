@@ -1,0 +1,21 @@
+zmodule miekg/lean
+
+zmodule Tarrasch/zsh-bd
+zmodule Tarrasch/zsh-command-not-found
+zmodule Tarrasch/zsh-mcd
+zmodule willghatch/zsh-cdr
+
+# zmodule completion
+zmodule zsh-users/zsh-completions --fpath src
+
+zmodule /usr/share/fzf/key-bindings.zsh 
+# zmodule /usr/share/fzf/completion.zsh
+
+zmodule wfxr/forgit
+zmodule junegunn/fzf-git.sh
+
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+
+# fzf tab complete
+zmodule Aloxaf/fzf-tab

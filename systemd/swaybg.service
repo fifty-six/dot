@@ -3,7 +3,7 @@ Description=Background for Wayland
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/sh -c 'swaybg -m fill -i ~/Desktop/back.png'
+ExecStart=/usr/bin/sh -c 'swaybg -m fill -i ~/.local/share/desktop/back.png'
 
 [Install]
 WantedBy=river.target

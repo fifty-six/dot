@@ -1,0 +1,184 @@
+Version
+version
+ls 
+if ls;
+if ls { echo "hi" }
+if ?(ls) { echo "hi" }
+ls | complete
+^ls | complete
+(^ls | complete).exit_code
+systemctl --user is-active river.target
+(systemctl --user is-active river.target).exit_code
+(systemctl --user is-active river.target | complete).exit_code
+systemctl --user is-active river.target | grep "hi"
+echo $0
+echo $?
+opam 
+$nu.config-path
+nvim $nu.config-path
+fish_completer
+let fish_completer = {|spans|<\n>    fish --command $'complete "--do-complete=($spans | str join " ")"'<\n>    | $"value(char tab)description(char newline)" + $in<\n>    | from tsv --flexible --no-infer<\n>}
+fish_completer
+fish_completer 1
+let fish_completer = {|spans|<\n>    fish --command $'complete "--do-complete=($spans | str join " ")"'<\n>    | $"value(char tab)description(char newline)" + $in<\n>    | from tsv --flexible --no-infer<\n>} 
+nvim $nu.config-path
+ls
+nvim $nu.config-path
+ls
+colormgr -h
+nvim $nu.config-path
+nu
+nvim $nu.config-path
+ls
+nu
+ls
+nvim ~/.zshrc
+echo $LS_COLORS
+echo $env.LS_COLORS
+ls
+ls | where size > 1mb
+cat fp-lib-table
+cat README.md
+bat README.md
+read 
+open
+open README.md
+open -h
+table
+cat ~/.zshrc | table
+table -h
+ls | table
+ls
+\ls
+@(ls)
+ls
+nvim $nu.config-path
+ls
+ls -la
+ls
+ls -l
+ls -la
+ls -a
+brightnessctl 100
+brightnessctl set 100
+brightnessctl set 1000
+ls
+ls | where type == dir 
+ls | where type == dir | each { |d| ls | length } | sort 
+ls | where type == dir | each { |d| ls d | length } | sort 
+ls | where type == dir | each { |d| ls $d | length } | sort 
+ls | where type == dir | each { |d| ls $d.name | length } | sort 
+ls | where type == dir | sortby { |d| ls $d.name | length } 
+ls | where type == dir | sort-by { |d| ls $d.name | length } 
+ls | where type == dir | each { |d| ls $d.name | insert cnt } | sort-by cnt
+ls | where type == dir | each { |d| insert cnt { ls $d.name | length } } } | sort-by cnt
+ls | where type == dir | each { |d| insert cnt { ls $d.name | length } } | sort-by cnt
+ls | where type == dir | each { |d| insert cnt { ls $d.name | length } } | sort-by cnt -r
+ls | where type == "dir" | each { |it| {$it.name, cnt: (ls $it.name | length)} } | sort-by cnt -r
+ls | where type == "dir" | each { |d| {name: $d.name, cnt: (ls $d.name | length)} } | sort-by cnt -r
+ls | where type == "dir" | each { |d| { $d.name: (ls $d.name | length) } } | flatten | sort-by value -r
+ls | where type == "dir" | each { |d| { $d.name: (ls $d.name | length) } } | flatten | sort -r
+ls -d | each { |d| [($d.name) (ls $d.name | length)] } | sort-by 1 -r
+ls -d
+ls | where type == "dir" | each { |d| {dir: $d.name, count: (ls $d.name | length)} } | sort-by count -r
+ls | where type == "dir" | each { |d| {dir: $d.name, count: (ls $d.name | count)} } | sort-by count -r
+ls | where type == "dir" | each { |d| {dir: $d.name, count: (ls $d.name | length)} } | sort-by count -r
+ls | where type == dir | each { |d| insert cnt { ls $d.name | length } } | sort-by cnt -r
+ls
+z wiki
+cd wiki
+zoxide 
+zoxide  wiki
+zz
+zo
+echo $nu.env-path
+nvim $nu.env-path
+nvim $nu.config-path
+z wiki
+nvim ~/.config/nushell/config.nu
+zoxide init nushell
+zoxide init nushell 
+rm ~/.zoxide.nu
+nvim ~/.config.nu
+nvim ~/.config/nushell/config.nu
+rm ~/.config/nushell/config.nu
+nvim ~/.config/nushell/config.nu
+ls
+z wiki
+ls
+config nu
+let-env PROMPT_LEAN_PWD = 1<\n>let-env PROMPT_LEAN_VCS = 1<\n>let-env PROMPT_LEAN_LEFT = ''<\n>let-env PROMPT_LEAN_RIGHT = '($env.PWD | path basename)($env.GIT_BRANCH | default "")'<\n>let-env PROMPT = '{env.PROMPT_LEAN_LEFT} {env.PROMPT_LEAN_RIGHT} % '<\n>
+def lean_prompt [] {<\n>    let pwd = (pwd | path basename)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | str trim | default "")<\n><\n>    $"($pwd)($git_branch) % "<\n>}<\n><\n>$env.PROMPT_COMMAND = { lean_prompt }
+def lean_prompt [] {<\n>    let start = date now  # Capture start time for measuring execution<\n><\n>    # Get the current working directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get the current Git branch (or empty string if not in a Git repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Measure execution time<\n>    let elapsed = (date now | date to-timezone (date now | get timezone) | date diff $start | into string | str replace ' sec' 's')<\n><\n>    # Define colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_green = (ansi green_bold)<\n>    let color_yellow = (ansi yellow_bold)<\n><\n>    # Assemble the prompt string<\n>    $"($color_yellow)($elapsed) ($color_green)($pwd)($color_blue)($git_branch) % ($color_reset)"<\n>}<\n><\n># Set the prompt command<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>
+ls
+find .
+tree
+tree | less
+ls
+def lean_prompt [] {<\n>    let start = date now  # Start time before rendering prompt<\n><\n>    # Get current directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get current Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Calculate execution time<\n>    let elapsed_raw = (date now | date diff $start)  # Gives "0:0:4.200000" for 4.2s<\n>    let elapsed = (<\n>        if ($elapsed_raw | into int | $in < 1sec) {<\n>            ' <1s'  # Instant commands<\n>        } else {<\n>            $elapsed_raw | format duration --full-name false | str trim  # Formats like "4m 22s"<\n>        }<\n>    )<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_green = (ansi green_bold)<\n>    let color_yellow = (ansi yellow_bold)<\n><\n>    # Assemble the final prompt string in lean style<\n>    $"% ($color_yellow)($elapsed) ($color_green)($pwd)($color_blue)($git_branch) ($color_reset)"<\n>}<\n><\n># Set the prompt command<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>
+def lean_prompt [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = (<\n>        if $elapsed_raw < 1000 {<\n>            " <1s"  # Less than 1 second<\n>        } else {<\n>            ($elapsed_raw / 1000) | into duration | format duration --full-name false | str trim  # Formats like "4m 22s"<\n>        }<\n>    )<\n><\n>    # Get current directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get current Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_green = (ansi green_bold)<\n>    let color_yellow = (ansi yellow_bold)<\n><\n>    # Assemble the final prompt string in lean style (right-aligned)<\n>    $"% ($color_yellow)($elapsed) ($color_green)($pwd)($color_blue)($git_branch) ($color_reset)"<\n>}<\n><\n># Set the prompt command<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>
+def lean_prompt [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n><\n>    let elapsed = (<\n>        if $elapsed_raw < 1000 {<\n>            " <1s"  # Less than 1 second<\n>        } else {<\n>            let seconds = ($elapsed_raw / 1000) | into int<\n>            if $seconds < 60 {<\n>                $"($seconds)s"<\n>            } else {<\n>                let minutes = ($seconds / 60) | into int<\n>                let remaining_seconds = ($seconds mod 60)<\n>                if $remaining_seconds == 0 {<\n>                    $"($minutes)m"<\n>                } else {<\n>                    $"($minutes)m ($remaining_seconds)s"<\n>                }<\n>            }<\n>        }<\n>    )<\n><\n>    # Get current directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get current Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_green = (ansi green_bold)<\n>    let color_yellow = (ansi yellow_bold)<\n><\n>    # Assemble the final prompt string in lean style (right-aligned)<\n>    $"% ($color_yellow)($elapsed) ($color_green)($pwd)($color_blue)($git_branch) ($color_reset)"<\n>}<\n><\n># Set the prompt command<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>
+ls
+def lean_prompt [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n><\n>    let elapsed = (<\n>        if $elapsed_raw < 1000 {<\n>            ""  # Omit for <1s<\n>        } else {<\n>            let seconds = ($elapsed_raw / 1000) | into int<\n>            if $seconds < 60 {<\n>                $"($seconds)s"<\n>            } else {<\n>                let minutes = ($seconds / 60) | into int<\n>                let remaining_seconds = ($seconds mod 60)<\n>                if $remaining_seconds == 0 {<\n>                    $"($minutes)m"<\n>                } else {<\n>                    $"($minutes)m ($remaining_seconds)s"<\n>                }<\n>            }<\n>        }<\n>    )<\n><\n>    # Get current directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = (<\n>        if ($git_branch != "") {<\n>            let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>            if ($dirty != "") { "+" } else { "" }<\n>        } else { "" }<\n>    )<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_grey = (ansi white_dimmed)  # Grey for Git status<\n><\n>    # Assemble right-aligned part (execution time, dir, git info)<\n>    let right_prompt = (<\n>        if $elapsed == "" {<\n>            $"($color_blue)($pwd)($color_grey)($git_branch)($git_status)($color_reset)"<\n>        } else {<\n>            $"($color_grey)($elapsed) ($color_blue)($pwd)($color_grey)($git_branch)($git_status)($color_reset)"<\n>        }<\n>    )<\n><\n>    # Set up the final prompt with `%` on the left and right-aligned info<\n>    $"($color_blue)%($color_reset) " + ($right_prompt | str right $env.STDOUT_COLUMNS)<\n>}<\n><\n># Set the prompt command<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>
+def lean_prompt [] {<\n>    $"(ansi blue_bold)% (ansi reset)"<\n>}<\n><\n>def lean_prompt_right [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = if $elapsed_raw < 1000 {<\n>        ""<\n>    } else {<\n>        let seconds = ($elapsed_raw / 1000) | into int<\n>        if $seconds < 60 {<\n>            $"($seconds)s"<\n>        } else {<\n>            let minutes = ($seconds / 60) | into int<\n>            let remaining_seconds = ($seconds mod 60)<\n>            if $remaining_seconds == 0 {<\n>                $"($minutes)m"<\n>            } else {<\n>                $"($minutes)m ($remaining_seconds)s"<\n>            }<\n>        }<\n>    }<\n><\n>    # Get current directory (basename only)<\n>    let pwd = (pwd | path basename)<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = if ($git_branch != "") {<\n>        let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>        if ($dirty != "") { "+" } else { "" }<\n>    } else { "" }<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_grey = (ansi white_dimmed)  # Grey for Git status<\n><\n>    # Construct the right-aligned prompt<\n>    if $elapsed == "" {<\n>        $"($color_blue)($pwd)($color_grey)($git_branch)($git_status)($color_reset)"<\n>    } else {<\n>        $"($color_grey)($elapsed) ($color_blue)($pwd)($color_grey)($git_branch)($git_status)($color_reset)"<\n>    }<\n>}<\n><\n># Set the prompt commands<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>$env.PROMPT_COMMAND_RIGHT = { lean_prompt_right }<\n>
+ls
+def lean_prompt [] {<\n>    $"(ansi blue_bold)% (ansi reset)"<\n>}<\n><\n>def lean_prompt_right [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = if $elapsed_raw < 1000 {<\n>        ""<\n>    } else {<\n>        let seconds = ($elapsed_raw / 1000) | into int<\n>        if $seconds < 60 {<\n>            $"($seconds)s"<\n>        } else {<\n>            let minutes = ($seconds / 60) | into int<\n>            let remaining_seconds = ($seconds mod 60)<\n>            if $remaining_seconds == 0 {<\n>                $"($minutes)m"<\n>            } else {<\n>                $"($minutes)m ($remaining_seconds)s"<\n>            }<\n>        }<\n>    }<\n><\n>    # Get full directory path, replacing home with ~<\n>    let pwd = (pwd | path expand | str replace $nu.home "~")<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = if ($git_branch != "") {<\n>        let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>        if ($dirty != "") { "+" } else { "" }<\n>    } else { "" }<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_light_grey = (ansi gray)  # Light grey for Git status<\n><\n>    # Construct directory + Git status formatting<\n>    let dir_git = if $git_branch == "" {<\n>        $"($color_blue)($pwd)($color_reset)"<\n>    } else {<\n>        $"($color_blue)($pwd) ($color_light_grey)($git_branch)($git_status)($color_reset)"<\n>    }<\n><\n>    # Construct the final right-aligned prompt<\n>    if $elapsed == "" {<\n>        $dir_git<\n>    } else {<\n>        $"($color_light_grey)($elapsed) ($dir_git)"<\n>    }<\n>}<\n><\n># Set the prompt commands<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>$env.PROMPT_COMMAND_RIGHT = { lean_prompt_right }<\n>
+$nu.home-path
+echo $nu.home-path
+def lean_prompt [] {<\n>    $"(ansi blue_bold)% (ansi reset)"<\n>}<\n><\n>def lean_prompt_right [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = if $elapsed_raw < 1000 {<\n>        ""<\n>    } else {<\n>        let seconds = ($elapsed_raw / 1000) | into int<\n>        if $seconds < 60 {<\n>            $"($seconds)s"<\n>        } else {<\n>            let minutes = ($seconds / 60) | into int<\n>            let remaining_seconds = ($seconds mod 60)<\n>            if $remaining_seconds == 0 {<\n>                $"($minutes)m"<\n>            } else {<\n>                $"($minutes)m ($remaining_seconds)s"<\n>            }<\n>        }<\n>    }<\n><\n>    # Get full directory path, replacing home with ~<\n>    let pwd = (pwd | path expand | str replace $nu.home-path "~")<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = if ($git_branch != "") {<\n>        let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>        if ($dirty != "") { "+" } else { "" }<\n>    } else { "" }<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue_bold)<\n>    let color_light_grey = (ansi gray)  # Light grey for Git status<\n><\n>    # Construct directory + Git status formatting<\n>    let dir_git = if $git_branch == "" {<\n>        $"($color_blue)($pwd)($color_reset)"<\n>    } else {<\n>        $"($color_blue)($pwd) ($color_light_grey)($git_branch)($git_status)($color_reset)"<\n>    }<\n><\n>    # Construct the final right-aligned prompt<\n>    if $elapsed == "" {<\n>        $dir_git<\n>    } else {<\n>        $"($color_light_grey)($elapsed) ($dir_git)"<\n>    }<\n>}<\n><\n># Set the prompt commands<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>$env.PROMPT_COMMAND_RIGHT = { lean_prompt_right }<\n>
+(ansi grey) 
+(ansi grey)
+(ansi --list)
+def lean_prompt [] {<\n>    $"(ansi blue_bold)% (ansi reset)"<\n>}<\n><\n>def lean_prompt_right [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = if $elapsed_raw < 1000 {<\n>        ""<\n>    } else {<\n>        let seconds = ($elapsed_raw / 1000) | into int<\n>        if $seconds < 60 {<\n>            $"($seconds)s"<\n>        } else {<\n>            let minutes = ($seconds / 60) | into int<\n>            let remaining_seconds = ($seconds mod 60)<\n>            if $remaining_seconds == 0 {<\n>                $"($minutes)m"<\n>            } else {<\n>                $"($minutes)m ($remaining_seconds)s"<\n>            }<\n>        }<\n>    }<\n><\n>    # Get full directory path, replacing home with ~<\n>    let pwd = (pwd | path expand | str replace $nu.home-path "~")<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = if ($git_branch != "") {<\n>        let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>        if ($dirty != "") { "+" } else { "" }<\n>    } else { "" }<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue)<\n>    let color_light_grey = (ansi black_dimmed)  # Light grey for Git status<\n><\n>    # Construct directory + Git status formatting<\n>    let dir_git = if $git_branch == "" {<\n>        $"($color_blue)($pwd)($color_reset)"<\n>    } else {<\n>        $"($color_blue)($pwd) ($color_light_grey)($git_branch)($git_status)($color_reset)"<\n>    }<\n><\n>    # Construct the final right-aligned prompt<\n>    if $elapsed == "" {<\n>        $dir_git<\n>    } else {<\n>        $"($color_light_grey)($elapsed) ($dir_git)"<\n>    }<\n>}<\n><\n># Set the prompt commands<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>$env.PROMPT_COMMAND_RIGHT = { lean_prompt_right }
+ls
+def lean_prompt [] {<\n>    $"(ansi blue)% (ansi reset)"<\n>}<\n><\n>def lean_prompt_right [] {<\n>    # Get last command execution time (convert from ms to readable format)<\n>    let elapsed_raw = ($env.CMD_DURATION_MS | default 0 | into int)<\n>    let elapsed = if $elapsed_raw < 1000 {<\n>        ""<\n>    } else {<\n>        let seconds = ($elapsed_raw / 1000) | into int<\n>        if $seconds < 60 {<\n>            $"($seconds)s"<\n>        } else {<\n>            let minutes = ($seconds / 60) | into int<\n>            let remaining_seconds = ($seconds mod 60)<\n>            if $remaining_seconds == 0 {<\n>                $"($minutes)m"<\n>            } else {<\n>                $"($minutes)m ($remaining_seconds)s"<\n>            }<\n>        }<\n>    }<\n><\n>    # Get full directory path, replacing home with ~<\n>    let pwd = (pwd | path expand | str replace $nu.home-path "~")<\n><\n>    # Get Git branch (or empty if not in a repo)<\n>    let git_branch = (do -i { git rev-parse --abbrev-ref HEAD } | complete | get stdout | str trim | default "")<\n><\n>    # Check for uncommitted changes (Git status)<\n>    let git_status = if ($git_branch != "") {<\n>        let dirty = (do -i { git status --porcelain } | complete | get stdout | str trim)<\n>        if ($dirty != "") { "+" } else { "" }<\n>    } else { "" }<\n><\n>    # Define ANSI colors<\n>    let color_reset = (ansi reset)<\n>    let color_blue = (ansi blue)<\n>    let color_git = (ansi black_dimmed)  # Light grey for Git status<\n><\n>    # Construct directory + Git status formatting<\n>    let dir_git = if $git_branch == "" {<\n>        $"($color_blue)($pwd)($color_reset)"<\n>    } else {<\n>        $"($color_blue)($pwd) ($color_git)($git_branch)($git_status)($color_reset)"<\n>    }<\n><\n>    # Construct the final right-aligned prompt<\n>    if $elapsed == "" {<\n>        $dir_git<\n>    } else {<\n>        $"($color_git)($elapsed) ($dir_git)"<\n>    }<\n>}<\n><\n># Set the prompt commands<\n>$env.PROMPT_COMMAND = { lean_prompt }<\n>$env.PROMPT_COMMAND_RIGHT = { lean_prompt_right }<\n>
+ls
+$env.PROMPT_INDICATOR = ""
+nvim ~/.config/nushell/config.nu
+ls
+git status
+git status | str trim
+git rev-parse --abbrev-ref HEAD | str trim
+complete
+complete -0h
+complete -h
+cd
+git status | complete
+git status | complete | str trim
+git status | complete | str trim stdout
+git status | complete | get tsdout | str trim
+nvim ~/.config/nushell/config.nu
+ls
+nvim ~/.config/nushell/config.nu
+$env.config.edit_mode
+nvim ~/.config/nushell/config.nu
+nvim
+find . -mindepth 1 -maxdepth 1 -type d -exec bash -c 'echo "$1 $(ls -Uba1 $1 | wc -l)"' - {} \;  | sort -k2 -nr
+\find . -mindepth 1 -maxdepth 1 -type d -exec bash -c 'echo "$1 $(ls -Uba1 $1 | wc -l)"' - {} \;  | sort -k2 -nr
+\find . -mindepth 1 -maxdepth 1 -type d -exec bash -c 'echo "$1 $(ls -Uba1 $1 | wc -l)"' - {} \;  | \sort -k2 -nr
+ls
+exa
+ls
+exa
+alias ls=exa
+alias ls = exa
+ls
+ls -lah
+\ls
+echo $0
+echo $env.0
+echo $env."0"
+$env
+ls
+nvim ~/.config/nushell/config.nu
+nvim $nu.env-path
+rm ~/.zoxide.nu
+nvim ~/.config/nushell/config.nu
+ls
+z wiki
+nvim 
+nvim
+l
+exa
+ls 
+ls

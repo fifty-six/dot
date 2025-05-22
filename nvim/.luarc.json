@@ -3,5 +3,5 @@
     "Lua.diagnostics.disable": [
         "lowercase-global"
     ],
-    "workspace.checkThirdParty": false
+    "workspace.checkThirdParty": "Disable"
 }
