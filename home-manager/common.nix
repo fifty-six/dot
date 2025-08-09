@@ -9,8 +9,8 @@ in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "home";
-  home.homeDirectory = "/home/home";
+  # home.username = "home";
+    # home.homeDirectory = "/home/home";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -19,7 +19,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
+  home.stateVersion = "25.11"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -27,6 +27,9 @@ in
     pkgs.nixd
     pkgs.ntfy-sh
     pkgs.jjui
+    pkgs.comma
+    pkgs.llvmPackages_20.bintools-unwrapped
+    pkgs.nix-output-monitor
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -78,6 +81,7 @@ in
     "ncdu/config".text = "--color dark";
     "wezterm/config.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/wezterm.lua";
     "ntfy/client.yml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/ntfy.yml";
+    "jj/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/jj.toml";
   };
 
   # Home Manager can also manage your environment variables through
@@ -102,20 +106,20 @@ in
 
   xdg.userDirs = {
     enable = true;
-    publicShare = "$HOME/.local/share/public";
-    desktop = "$HOME/.local/share/desktop";
-    music = "$HOME/.local/share/music";
-    pictures = "$HOME/.local/share/pictures";
-    videos = "$HOME/.local/share/videos";
-    templates = "$HOME/.local/share/templates";
+    publicShare = "$HOME/media/public";
+    desktop = "$HOME/media/desktop";
+    music = "$HOME/media/music";
+    pictures = "$HOME/media/pictures";
+    videos = "$HOME/media/videos";
+    templates = "$HOME/media/templates";
   };
 
   home.sessionPath = [
-    "${config.home.homeDirectory}/local/state/nix/profile/bin"
+    "${config.home.homeDirectory}/.local/state/nix/profile/bin"
+    "${config.home.homeDirectory}/.local/share/dotnet/.dotnet/tools"
 
     # all my xdg gone
-    "${config.home.homeDirectory}/.dotnet/tools"
-    "${config.home.homeDirectory}/.local/pipx/venvs/flit/bin"
+    # "${config.home.homeDirectory}/.local/pipx/venvs/flit/bin"
 
     "${config.xdg.dataHome}/npm/bin"
 
@@ -133,21 +137,44 @@ in
   systemd.user.services.ntfy = {
     Unit = {
         Description = "ntfy";
+
+      After = ["graphical-session.target"];
     };
-    Install = { WantedBy = ["river.target"]; };
+    Install = { 
+            WantedBy = ["graphical-session.target"]; 
+
+        };
     Service = {
         ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
+    };
+  };
+
+  systemd.user.services.easyeffects = {
+    Unit = {
+      Description = "Easyeffects Daemon";
+      Requires = ["pipewire.service"];
+      After = ["graphical-session.target"];
+    };
+    Install = { WantedBy = ["graphical-session.target"]; };
+    Service = {
+      ExecStart = "/usr/bin/easyeffects --gapplication-service";
     };
   };
 
   systemd.user.services.kdeconnectd = {
     Unit = {
         Description = "KDE Connect";
+
+      After = ["graphical-session.target"];
     };
-    Install = { WantedBy = ["river.target"]; };
+    Install = { WantedBy = ["graphical-session.target"]; };
     Service = {
         ExecStart = "/usr/bin/kdeconnectd";
     };
+  };
+
+  services.clipse = {
+      enable = true;
   };
 
   services.swaync = {
@@ -424,8 +451,7 @@ in
 
     package = pkgs.emptyDirectory;
 
-    # ?
-    dotDir = ".local/share/zsh";
+    dotDir = "${config.xdg.dataHome}/zsh";
 
     initContent = ''
         compinit -d "${config.xdg.cacheHome}"/zsh/zcompdump-"$ZSH_VERSION"
@@ -455,14 +481,6 @@ in
 
   programs.atuin = {
       enable = true;
-        # package = pkgs.emptyDirectory;
-      
-      # We want to do this ourselves, because I'm using the system package 
-      # *and* I want the autosuggest strategy to use atuin
-        # enableZshIntegration = false;
-
-      # similarly
-        # enableNushellIntegration = false;
 
       settings = {
           search_mode = "skim";

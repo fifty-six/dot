@@ -1,0 +1,11 @@
+[user]
+name = "Yusuf Bham"
+email = "git@fiftysix.dev"
+
+[aliases]
+# tug - move the nearest bookmark to the nearest non-empty change at or before @
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"]
+
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'closest_nonempty(to)' = 'heads(::to ~ empty())'

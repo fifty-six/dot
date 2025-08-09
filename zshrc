@@ -1,13 +1,10 @@
 #!/usr/bin/zsh
 
-# zmodload zsh/zprof
-
+# Force things to use XDG directories
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CACHE_HOME="$HOME/.cache"
-
-# compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION"
 
 export PLATFORMIO_CORE_DIR="${XDG_DATA_HOME}/platformio"
 export DOT_SAGE="${XDG_CONFIG_HOME}/sage"
@@ -32,11 +29,6 @@ export HISTFILE="${XDG_STATE_HOME}/zsh/history"
 
 export GHCUP_USE_XDG_DIRS=true
 
-# export PATH="${HOME}/.local/pipx/venvs/flit/bin/:$PATH:$XDG_DATA_HOME/npm/bin"
-# export PATH="$PATH:$XDG_DATA_HOME/npm/bin"
-# export PATH="$PATH:${HOME}/.local/pipx/venvs/flit/bin"
-# export PATH="$PATH:${HOME}/.dotnet/tools"
-
 source <(carapace _carapace)
 
 [[ $TERM == eterm-color ]] && export TERM=xterm
@@ -56,13 +48,6 @@ bindkey -r '^Ed' # This causes the shell to wait after C-e to see if the d is go
 # variables
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
-# Sourced Plugins
-# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# compinits
-# compinit ~/.bin/*.zsh-completion
-
 # Sanity
 setopt nonomatch
 
@@ -73,11 +58,7 @@ export LD="mold"
 alias sudo='sudo -s'
 alias grep='rg'
 alias ltr="command ls --color=auto -ltr"
-export MAKEFLAGS="-j5"
 alias asmdump="objdump -drwC -Mintel --visualize-jumps=color"
-
-# aura
-alias aura="aura --color=always"
 
 # Functions
 psaux () { pgrep -f "$@" | xargs ps -fp 2>/dev/null; }
@@ -102,31 +83,6 @@ fi
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
-# ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-# [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-# [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-# source "${ZINIT_HOME}/zinit.zsh"
-# 
-# zinit light miekg/lean
-# 
-# zinit light Tarrasch/zsh-bd
-# zinit light Tarrasch/zsh-command-not-found
-# zinit light Tarrasch/zsh-mcd
-# zinit light willghatch/zsh-cdr
-# zinit light zdharma-continuum/fast-syntax-highlighting
-# zinit light zsh-users/zsh-autosuggestions
-# zinit light zsh-users/zsh-completions
-# 
-# export FZF_COMPLETION_TRIGGER="~~"
-# zinit snippet /usr/share/fzf/key-bindings.zsh 
-# zinit snippet /usr/share/fzf/completion.zsh
-# 
-# zinit ice wait lucid
-# zinit load wfxr/forgit
-# 
-# zinit ice wait lucid
-# zinit load junegunn/fzf-git.sh
-
 eval "$(zoxide init zsh)"
 
 autoload -Uz compinit
@@ -137,16 +93,11 @@ else
 	compinit -C;
 fi;
 
-# export ATUIN_NOBIND=1
-# zinit load atuinsh/atuin
-
 export CC=clang
 export CXX=clang++
 
 # Fix GRML prompt (if wanted) colors
 prompt_grml_precmd
-
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias vim="nvim"
 alias xmake="mold -run xmake"
@@ -174,58 +125,18 @@ zle -N clear-screen scroll-top
 
 atuin-setup() {
     if ! which atuin &> /dev/null; then return 1; fi
-    # bindkey '^E' _atuin_search_widget
 
     _zsh_autosuggest_strategy_atuin_top() {
         suggestion=$(atuin search --cmd-only --limit 1 --search-mode prefix -- $1)
     }
     ZSH_AUTOSUGGEST_STRATEGY=atuin_top
 
-    # export ATUIN_NOBIND="true"
     eval "$(atuin init zsh --disable-up-arrow)"
-    # fzf-atuin-history-widget() {
-    #     local selected num
-    #     setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
-
-    #     # local atuin_opts="--cmd-only --limit ${ATUIN_LIMIT:-5000}"
-    #     local atuin_opts="--cmd-only --print0"
-    #     local fzf_opts=(
-    #         --read0
-    #         --height=${FZF_TMUX_HEIGHT:-80%}
-    #         --tac
-    #         "-n2..,.."
-    #         --tiebreak=index
-    #         "--query=${LBUFFER}"
-    #         "+m"
-    #         "--bind=ctrl-d:reload(atuin history list),ctrl-r:reload(atuin history list $atuin_opts)"
-    #     )
-
-    #     selected=$(
-    #         eval "atuin history list ${atuin_opts}" |
-    #             fzf "${fzf_opts[@]}" --read0
-    #     )
-    #     local ret=$?
-    #     if [ -n "$selected" ]; then
-    #         # the += lets it insert at current pos instead of replacing
-    #         LBUFFER+="${selected}"
-    #     fi
-    #     zle reset-prompt
-    #     return $ret
-    # }
-    # zle -N fzf-atuin-history-widget
-    # bindkey '^R' fzf-atuin-history-widget
 }
 atuin-setup
 
-# if [ $TERM -neq foot ] && command -v theme.sh > /dev/null
-#     theme.sh hemisu-dark
-# fi
-
 # opam configuration (equivalent to eval $(opam env))
-[[ ! -r /home/home/.local/share/opam/opam-init/init.zsh ]] || source /home/home/.local/share/opam/opam-init/init.zsh  > /dev/null 2> /dev/null
-
-# ?
-# source /home/home/.config/broot/launcher/bash/br
+# [[ ! -r /home/home/.local/share/opam/opam-init/init.zsh ]] || source /home/home/.local/share/opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 if alias z &>/dev/null; then 
     unalias z
@@ -238,7 +149,7 @@ if (( $+commands[exa] )); then
     alias la="eza -lag"
 fi
 
-# home-manager gl stuff doesn't work and i cba man
+# home-manager opengl stuff doesn't work and i cba man
 if (( $+commands[wezterm] )); then
     alias wezterm=$(which -a wezterm | tail -n 1)
 fi;
@@ -264,9 +175,7 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
+alias hm-switch="home-manager --log-format internal-json switch -v |& nom  --json"
+
 bindkey "^T" fzf-tab-complete
 bindkey "^I" complete-word
-
-# alias cd=z
-
-# zprof

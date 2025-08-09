@@ -30,7 +30,7 @@
     title = {
       text = "Notification Center";
       "clear-all-button" = true;
-      "button-text" = "\udb80\uddb4 Clear";
+      "button-text" = builtins.fromJSON ''"\udb80\uddb4 Clear"'';
     };
     dnd = {
       text = "Do Not Disturb";
@@ -44,45 +44,47 @@
       "image-radius" = 5;
     };
     volume = {
-      label = "\udb81\udd7e";
+      label = builtins.fromJSON ''"\udb81\udd7e"'';
     };
     backlight = {
-      label = "\udb80\udcdf";
+      label = builtins.fromJSON ''"\udb80\udcdf"'';
     };
     "buttons-grid" = {
-      actions = [
+      actions = 
+        map (builtins.mapAttrs (n: v: builtins.fromJSON ''"${v}"''))
+        [
         {
-          label = "\udb81\udc25";
+          label = ''\udb81\udc25'';
           command = "systemctl poweroff";
         }
         {
-          label = "\udb81\udf09";
+          label = ''\udb81\udf09'';
           command = "systemctl reboot";
         }
         {
-          label = "\udb80\udf3e";
+          label = ''\udb80\udf3e'';
           command = "swaylock-corrupter";
         }
         {
-          label = "\udb80\udf43";
+          label = ''\udb80\udf43'';
           command = "swaymsg exit";
         }
         {
-          label = "\udb80\uddb4";
+          label = ''\udb80\uddb4'';
           command = "swaync-client -C";
         }
         {
-          label = "\udb81\udd7e";
+          label = ''\udb81\udd7e'';
           command = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
           type = "toggle";
         }
         {
-          label = "\udb80\udf6c";
+          label = ''\udb80\udf6c'';
           command = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           type = "toggle";
         }
         {
-          label = "\udb81\udda9";
+          label = ''\udb81\udda9'';
           command = "iwgtk";
         }
       ];

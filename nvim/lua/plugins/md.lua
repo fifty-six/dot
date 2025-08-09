@@ -4,13 +4,18 @@
 local opts = { noremap=true, silent=false }
 
 return {
-    { "epwalsh/obsidian.nvim",
+    { "obsidian-nvim/obsidian.nvim",
         dependencies = { "hrsh7th/nvim-cmp", "nvim-telescope/telescope.nvim" },
         config = function()
             require("obsidian").setup({
                 dir = "~/src/wiki",
                 daily_notes = {
-                    folder = "daily"
+                    folder = "daily",
+                    template = "daily_obs.md",
+                    workdays_only = false,
+                },
+                templates = {
+                    folder = "templates"
                 },
                 completion = {
                     nvim_cmp = true,
