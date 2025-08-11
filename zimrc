@@ -18,4 +18,5 @@ zmodule zdharma-continuum/fast-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 
 # fzf tab complete
-zmodule Aloxaf/fzf-tab
+# BUG: breaks my complete with spaces to going from w1\ w2 to w1\\ w2 
+# zmodule Aloxaf/fzf-tab
