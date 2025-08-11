@@ -25,21 +25,6 @@ return {
         end
     },
     { "godlygeek/tabular" },
-    -- {
-    --     -- dependencies = { "nvim-treesitter/nvim-treesitter" },
-    --     "HiPhish/rainbow-delimiters.nvim",
-    --     config = function()
-    --         local cp = require('nvim-tundra.palette.arctic')
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterRed",    { fg = cp.gray._50  })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = cp.gray._100 })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterBlue",   { fg = cp.gray._200 })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = cp.gray._300 })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterGreen",  { fg = cp.gray._400 })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = cp.gray._500 })
-    --         vim.api.nvim_set_hl(0, "RainbowDelimiterCyan",   { fg = cp.gray._600 })
-    --         require("rainbow-delimiters")
-    --     end
-    -- },
     -- Signatures while calling methods
     {
         "ray-x/lsp_signature.nvim",
@@ -56,8 +41,6 @@ return {
             require('nvim-lastplace').setup {}
         end,
     },
-    -- Something to try, replaces like half of the things in existence
-    --{ 'echasnovski/mini.nvim', version = false },
     -- Shows a loading thing for LSP servers
      {
          "j-hui/fidget.nvim",
@@ -101,26 +84,17 @@ return {
              }
          end
      },
-     -- faster than vim-sandwich/vim-surround!
-     -- Use to change surrounding chars/add
      -- cs"' (no i needed)
      -- ys(...)
      -- e.g. ysw"
      {
          "kylechui/nvim-surround",
-         -- version = "*", -- Use for stability; omit to use `main` branch for the latest features
          event = "VeryLazy",
          config = function()
              require("nvim-surround").setup {}
          end
      },
-     -- { "tpope/vim-surround" },
      { "tpope/vim-unimpaired" },
-     --
-     -- Highlights instances of letters on a line for easier f[x]
-     -- TODO: Maybe remove now that we have hop.nvim?
-     -- { "unblevable/quick-scope" }
-     -- Let's you jump around your file v quickly
      {
          'smoka7/hop.nvim',
          config = function()
@@ -166,7 +140,6 @@ return {
      -- Theme
      {
          'sam4llis/nvim-tundra',
-         -- Make sure it runs first!
          priority = 1000,
          config = function()
              require('nvim-tundra').setup {
@@ -200,10 +173,6 @@ return {
              vim.g.tex_flavor = "latex"
              vim.g.vimtex_view_method = "zathura"
              vim.g.vimtex_quickfix_mode = 0
-             -- vim.g.tex_conceal = "abdmg"
-             -- vim.g.tex_superscripts = "[a-zA-Z]"
-             -- vim.g.tex_subscripts="[a-zA-Z]"
-             -- let g:matchup_override_vimtex = 1
              vim.cmd [[
                  let g:vimtex_syntax_conceal = {
                  \ 'accents': 1,
@@ -220,7 +189,7 @@ return {
                  \ 'styles': 1,
                  \}
                  let g:vimtex_matchparen_enabled = 0
-                 ]]
+             ]]
          end
      },
      -- Uses the sign column line left of line numbers for git info
@@ -308,11 +277,11 @@ return {
              require("trouble").setup {}
          end
      },
-     -- Show errors kinda like what you get from rustc but inline
+     -- Show errors inline
      {
          "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
          config = function()
-             -- don't need dupes lol
+             -- don't need dupes 
              vim.diagnostic.config { virtual_text = false }
              vim.diagnostic.config { virtual_lines = { only_current_line = true } }
 
@@ -367,29 +336,13 @@ return {
              vim.g.UltiSnipsJumpBackwardTrigger = "<C-Shift-Tab>"
          end
      },
-     -- { "hrsh7th/cmp-omni" },
-     --
      {
          'echasnovski/mini.nvim',
          config = function()
              -- require('mini.completion').setup()
          end
      },
-     -- {
-     --     "jakewvincent/mkdnflow.nvim",
-     --     config = function()
-     --         require('mkdnflow').setup()
-     --     end
-     -- },
-     --
-     --  { "NvChad/base46" },
-     --
-     -- { "saadparwaiz1/cmp_luasnip",
-     --     dependencies = "LuaSnip",
-     -- }
-     { "hrsh7th/cmp-nvim-lua",
-         -- dependencies = "cmp_luasnip",
-     },
+     { "hrsh7th/cmp-nvim-lua" },
      {
          "hrsh7th/cmp-nvim-lsp",
          dependencies = "cmp-nvim-lua",
@@ -407,31 +360,16 @@ return {
          "quangnguyen30192/cmp-nvim-ultisnips",
          dependencies = "SirVer/ultisnips"
      },
-     -- misc plugins
      {
          "windwp/nvim-autopairs",
          dependencies = "nvim-cmp",
-         -- config = function()
-         --     -- require("plugins.configs.others").autopairs()
-         -- end,
      },
-     --
-     --    -- { "goolord/alpha-nvim",
-     --    --     dependencies = "base46",
-     --    --     disable = true,
-     --    --     config = function()
-     --    --         -- require "plugins.configs.alpha"
-     --    --     end,
-     --    -- },
-     --
-     -- Easy commenting, as you'd expect
      {
          "numToStr/Comment.nvim",
          module = "Comment",
          keys = { "gc", "gb" },
          -- idk why this doesn't auto-load from lazy.nvim's call?
          config = function()
-             -- require("plugins.configs.others").comment()
              require('Comment').setup()
          end,
      },
@@ -440,12 +378,6 @@ return {
          "kyazdani42/nvim-tree.lua",
          ft = "alpha",
          cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-         config = function()
-             -- require "plugins.configs.nvimtree"
-         end,
-         init = function()
-             -- require("core.utils").load_mappings "nvimtree"
-         end,
      },
      {
          "mbbill/undotree",
@@ -454,10 +386,6 @@ return {
              vim.g.undotree_SetFocusWhenToggle = 1
          end
      },
-     -- Fuzzy finder.
-     -- The default key bindings to find files will use Telescope's
-     -- `find_files` or `git_files` depending on whether the
-     -- directory is a git repo.
      {
          "nvim-telescope/telescope.nvim",
          cmd = "Telescope",
@@ -592,22 +520,7 @@ return {
      },
 
      { 'nvim-telescope/telescope-ui-select.nvim' },
-     -- { "ixru/nvim-markdown" },
-     -- Makes it so if you click a key, it'll pop-up what keys dependencies do what
-     -- e.g. hit g and it'll pop up e -> end of word, f -> file under cursor, etc.
-     -- {
-     --     "folke/which-key.nvim",
-     --     config = function()
-     --         vim.o.timeout = true
-     --         vim.o.timeoutlen = 300
-     --         require("which-key").setup {
-     --             triggers_blacklist = {
-     --                 i = { "j", "k", "]" },
-     --                 v = { "j", "k" }
-     --             }
-     --         }
-     --     end
-     -- },
+
      {
          "aarondiel/spread.nvim",
          requires = { "nvim-treesitter/nvim-treesitter" },

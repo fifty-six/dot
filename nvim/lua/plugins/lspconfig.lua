@@ -76,10 +76,8 @@ return {
         dependencies = {
             'neovim/nvim-lspconfig',
             'nvim-lua/plenary.nvim',
-            -- you also will likely want nvim-cmp or some completion engine
         },
 
-        -- see details below for full configuration options
         opts = {
             lsp = {
                 on_attach = on_attach,
@@ -124,7 +122,6 @@ return {
         end
     },
 
-    -- LSP Support
     {
         "neovim/nvim-lspconfig",
         dependencies = { "folke/neoconf.nvim", "folke/neodev.nvim" },
@@ -183,7 +180,6 @@ return {
                 table.unpack(o)
             })
 
-            -- TODO: lua_ls
             lspconfig.lua_ls.setup {
                 before_init = require("neodev.lsp").before_init,
                 on_attach = on_attach,
@@ -213,6 +209,8 @@ return {
                     },
                 },
             }
+
+            -- I really gotta figure out a less shit way for clangd to not explode on embedded stuff
             -- lspconfig.clangd.setup {
             --     on_attach = on_attach,
             --     capabilities = capabilities,
@@ -231,19 +229,12 @@ return {
                     haskell = {
                         plugin = {
                             stan = {
+                --             -- I cannot stand 4000 strict data type warnings, and HLS doesn't respect the stan config files :/
                                 globalOn = false,
                             },
                         },
                     },
                 },
-                -- settings = {
-                --     haskell = {
-                --         plugin = {
-                --             -- I cannot stand 4000 strict data type warnings, and HLS doesn't respect the stan config files :/
-                --             stan = { globalOn = false }
-                --         }
-                --     }
-                -- }
             }
 
 
@@ -258,11 +249,4 @@ return {
             end
         end,
     },
-    -- {
-    --     'andymass/vim-matchup',
-    --     config = function()
-    --         -- may set any options here
-    --         vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    --     end
-    -- },
 }

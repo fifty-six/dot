@@ -1,10 +1,5 @@
 return {
-    -- { "amarakon/nvim-cmp-lua-latex-symbols" },
     { "hrsh7th/nvim-cmp",
-        -- version = "*",
-        -- dependencies = "friendly-snippets",
-        -- dependencies = "LuaSnip",
-        -- require = "quangnguyen30192/cmp-nvim-ultisnips",
         dependencies = { "hrsh7th/cmp-omni", "hrsh7th/cmp-nvim-lsp", "kdheepak/cmp-latex-symbols" },
         init = function()
             vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
@@ -47,10 +42,8 @@ return {
                         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
                     },
                     documentation = cmp.config.window.bordered()
-                    -- documentation = {
-                    --     border = border "CmpDocBorder",
-                    -- },
                 },
+                -- I think this was exploding something
                 -- snippet = {
                 --     expand = function(args)
                 --         -- require("luasnip").lsp_expand(args.body)
@@ -72,19 +65,6 @@ return {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = false,
                     },
-
-                    -- ["<Tab>"] = cmp.mapping(
-                    --   function(fallback)
-                    --     cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-                    --   end,
-                    --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-                    -- ),
-                    -- ["<S-Tab>"] = cmp.mapping(
-                    --   function(fallback)
-                    --     cmp_ultisnips_mappings.jump_backwards(fallback)
-                    --   end,
-                    --   { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-                    -- ),
 
                     ["<Tab>"] = cmp.mapping(
                         function(fallback)
@@ -108,31 +88,6 @@ return {
                             end
                         end, { "i", "s", }
                     ),
-
-                    -- ["<Tab>"] = cmp.mapping(function(fallback)
-                --     if cmp.visible() then
-                --         cmp.select_next_item()
-                --     elseif require("luasnip").expand_or_jumpable() then
-                --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-                --     else
-                --         fallback()
-                --     end
-                -- end, {
-                --         "i",
-                --         "s",
-                --     }),
-                -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-                --     if cmp.visible() then
-                --         cmp.select_prev_item()
-                --     elseif require("luasnip").jumpable(-1) then
-                --         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-                --     else
-                --         fallback()
-                --     end
-                -- end, {
-                --         "i",
-                --         "s",
-                --     }),
             },
             sources = { table.unpack(default_sources) }
         }
