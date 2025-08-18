@@ -157,9 +157,9 @@ return {
 
             lspconfig.clangd.setup({
                 cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-                init_options = {
-                    fallbackFlags = { '-std=c++17' },
-                },
+                -- init_options = {
+                --     fallbackFlags = { '-std=c++17' },
+                -- },
             })
 
             for _, v in pairs(lsps) do
