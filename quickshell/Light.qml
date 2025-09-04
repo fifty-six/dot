@@ -9,6 +9,7 @@ Item {
     id: window
     property string light: "light.bedroom_hue"
     implicitWidth: slider.implicitWidth
+    implicitHeight: slider.implicitHeight
     // color: contentItem.palette.active.window
 
     Slider {
@@ -23,10 +24,10 @@ Item {
         Layout.fillWidth: true
 
         onMoved: {
-            console.log(this.value);
+            //console.log(this.value);
 
             if (this.value === null)
-            return;
+                return;
 
             let brightness = Math.round((this.value / 255) * 100);
 
@@ -47,7 +48,7 @@ Item {
 
             stdout: StdioCollector {
                 onStreamFinished: {
-                    console.log(this.text);
+                    // console.log(this.text);
                     slider.value = parseInt(this.text);
                 }
             }

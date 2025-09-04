@@ -23,7 +23,6 @@ Scope {
 
             color: "transparent";
 
-
             // This one is the actual bar
             Rectangle {
                 id: bar
@@ -31,7 +30,7 @@ Scope {
                 anchors.rightMargin: 5
                 anchors.fill: parent
                 radius: 12
-                color: Qt.rgba(0.5, 0.5, 0.5, 0.1);
+                color: Qt.rgba(0.01, 0.01, 0.01, 0.7);
 
                 RowLayout {
                     anchors {
@@ -45,8 +44,16 @@ Scope {
                         Layout.alignment: Qt.AlignVCenter;
                     }
 
-                }
+                    // Button {
+                    //     id: button
+                    //     text: "Lights?"
+                    //     onClicked: popup.visible = !popup.visible;
 
+                    //     // TODO: this is bounded by the thing it's in. i need to unparent it? same issue with the popup i think?
+                    //     Pane { id: popup; y: -25; visible: false; Lights {} } // closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent }
+                    // }
+
+                }
 
                 RowLayout {
                     anchors {
@@ -70,9 +77,28 @@ Scope {
 
                     spacing: 20;
 
+                    Time { }
+
                     Battery {
                         implicitHeight: parent.height;
                         implicitWidth: 20;
+                    }
+
+                    // SysTray {}
+                    
+                    Network { }
+
+                    Volume { }
+
+                    Brightness {}
+
+                    Module {
+                        Text {
+                            color: "white"
+                            text: "among us"
+                            font.family: "Fira Code"
+                            font.pointSize: 10
+                        }
                     }
 
                     Light {
@@ -82,9 +108,7 @@ Scope {
                         Layout.fillHeight: true;
                     }
 
-                    // SysTray {}
-                    // Volume {}
-                    Network {}
+
                 } 
             }
         }

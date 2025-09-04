@@ -5,7 +5,7 @@ import Quickshell.Services.UPower
 
 ColumnLayout {
     id: root
-    spacing: 0;
+    spacing: 3;
 
     visible: UPower.displayDevice.isLaptopBattery;
 
@@ -19,7 +19,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
 
         implicitWidth: text.width + 10
-        implicitHeight: text.height + 10
+        implicitHeight: text.height
         color: "transparent"
 
         Text {
@@ -45,7 +45,6 @@ ColumnLayout {
 
             font.pointSize: 10;
             font.family: "Fira Mono";
-
         }
 
         //

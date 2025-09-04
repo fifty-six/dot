@@ -7,6 +7,8 @@ import Quickshell.Services.UPower
 ColumnLayout {
     id: root;
 
+    Layout.alignment: Qt.AlignBottom
+
     spacing: 5;
     implicitWidth: text.implicitWidth;
 
@@ -23,6 +25,20 @@ ColumnLayout {
 
     Process {
         running: true
+        command: ["whereis", "nmcli"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                if (this.text.split(" ").length > 1) {
+                    watcher.running = true;
+                } else {
+                    root.visible = false;
+                }
+            }
+        }
+    }
+
+    Process {
+        id: watcher
         command: ["nmcli", "m"]
         stdout: SplitParser {
             onRead: nmcli.running = true
