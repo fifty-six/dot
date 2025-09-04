@@ -1,7 +1,7 @@
-@define-color cc-bg rgba(26, 27, 38, 1);
+@define-color cc-bg rgba(26, 27, 38, 0.7);
 @define-color noti-border-color rgba(255, 255, 255, 0.15);
 @define-color noti-bg rgb(17, 17, 27);
-@define-color noti-bg-darker rgb(43, 43, 57);
+@define-color noti-bg-darker rgba(17, 18, 25, 0.7);
 @define-color noti-bg-hover rgb(27, 27, 43);
 @define-color noti-bg-focus rgba(27, 27, 27, 0.6);
 @define-color noti-close-bg rgba(255, 255, 255, 0.1);
@@ -14,10 +14,29 @@
   font-family: "JetBrainsMono NFM SemiBold,JetBrainsMono Nerd Font Mono";
 }
 
+.control-center {
+  background: @cc-bg;
+  border: 2px solid #34548a;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.vertical, .horizontal {
+    border-radius: 10px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
+}
+
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
   opacity: 1;
-  background: @noti-bg-darker;
+  /* background: @noti-bg-darker; */
 }
 
 .notification-row {
@@ -28,13 +47,19 @@
 
 .notification {
   background: @cc-bg;
-  border: 2px solid #34548a;
-  border-radius: 0px;
+  border-radius: 20px;
+  padding: 20px;
   margin: 3px -2px 3px 0px;
 }
 
-.notification-content {
-  background: @cc-bg;
+.notification-background {
+    background-color: transparent;
+}
+
+.notification-group {
+    border-radius: 20px;
+    padding: 15px;
+    background-color: transparent;
 }
 
 .notification-default-action {
@@ -66,6 +91,7 @@
   border-radius: 0px;
 }
 
+.notification:hover,
 .notification-default-action:hover,
 .notification-action:hover {
   color: #7aa2f7;
@@ -152,20 +178,6 @@
   text-shadow: none;
 }
 
-.control-center {
-  background: @cc-bg;
-  border: 2px solid #34548a;
-  border-radius: 0px;
-}
-
-.control-center-list {
-  background: transparent;
-}
-
-.control-center-list-placeholder {
-  opacity: 0.5;
-}
-
 .floating-notifications {
   background: transparent;
 }
@@ -233,19 +245,14 @@
 
 .widget-mpris {
   color: @text-color;
-  background: @noti-bg-darker;
+  /* background: @noti-bg-darker; */
   padding: 5px 10px;
   margin: 5px 10px 5px 10px;
-  border-radius: 5px;
+  border-radius: 20px;
 }
 
 .widget-mpris > box > button {
   border-radius: 5px;
-}
-
-.widget-mpris-player {
-  padding: 5px 10px;
-  margin: 10px;
 }
 
 .widget-mpris-title {
@@ -257,18 +264,27 @@
   font-size: 1.1rem;
 }
 
+.widget-mpris-player {
+	margin: 10px;
+}
+
 .widget-buttons-grid {
-  font-size: x-large;
+  font-size: 2rem;
   padding: 5px;
   margin: 10px 10px 5px 10px;
-  border-radius: 0px;
-  background: @noti-bg-darker;
+  border-radius: 20px;
+  /* background: @noti-bg-darker; */
+}
+
+.widget-buttons-grid .text-button {
+    font-family: "FiraCode Nerd Font";
+    font-size: 2rem;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button {
   margin: 3px;
   background: @cc-bg;
-  border-radius: 0px;
+  border-radius: 8px;
   color: @text-color;
 }
 
@@ -293,19 +309,23 @@
 }
 
 .widget-volume {
-  background: @noti-bg-darker;
+  /* background: @noti-bg-darker; */
   padding: 5px;
-  margin: 5px 10px;
-  border-radius: 0px;
+  margin: 5px 25px 0 25px;
+  border-radius: 20px;
   font-size: 2rem;
   color: #7aa2f7;
+}
+
+.widget-volume > box {
+    padding: 2px 5px 2px 5px;
 }
 
 .widget-backlight {
   background: @noti-bg-darker;
   padding: 5px;
   margin: 5px 10px;
-  border-radius: 0px;
+  border-radius: 20px;
   font-size: 2rem;
   color: #7aa2f7;
 }

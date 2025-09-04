@@ -63,15 +63,11 @@
         }
         {
           label = ''\udb80\udf3e'';
-          command = "swaylock-corrupter";
+          command = "corrupted-lock";
         }
         {
           label = ''\udb80\udf43'';
-          command = "swaymsg exit";
-        }
-        {
-          label = ''\udb80\uddb4'';
-          command = "swaync-client -C";
+          command = "niri msg quit";
         }
         {
           label = ''\udb81\udd7e'';
@@ -85,7 +81,7 @@
         }
         {
           label = ''\udb81\udda9'';
-          command = "iwgtk";
+          command = "io.elementary.settings";
         }
       ];
     };

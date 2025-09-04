@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+f=$(mktemp)
+grimshot save screen - | corrupter - > $f
+gtklock -b $f
+rm $f
