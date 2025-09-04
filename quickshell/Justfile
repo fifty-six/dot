@@ -1,0 +1,7 @@
+alias b := build
+
+build:
+    tsc --downlevelIteration --lib es2015,dom --target es2021 Services/niri.ts
+run:
+    tsc --downlevelIteration --lib es2015,dom --target es2021 Services/niri.ts --watch &
+    qs
