@@ -116,6 +116,16 @@ class HALightController:
     
     def toggle(self, entity_id: str) -> bool:
         return self._service_call("toggle", entity_id)
+
+    def brightness_raw(self, entity_id: str) -> bool:
+        result = self._request("GET", f"/api/states/{entity_id}")
+        if result:
+            entity = HAEntityState.model_validate(result)
+            print(entity.attributes.brightness)
+            return True
+        else:
+            rprint("[red]Failed to get state. Check your token and entity ID.[/red]")
+            return False
     
     def get_state(self, entity_id: str) -> bool:
         """Get light state and attributes with Rich formatted output"""
@@ -200,7 +210,8 @@ def create_parser() -> argparse.ArgumentParser:
         ("on", "Turn light on"),
         ("off", "Turn light off"), 
         ("toggle", "Toggle light state"),
-        ("get", "Get light state")
+        ("get", "Get light state"),
+        ("brightness-raw", "Brightness (int)")
     ]:
         cmd_parser = subparsers.add_parser(cmd, help=help_text)
         add_entity_arg(cmd_parser)
@@ -224,7 +235,8 @@ def main():
         "on": partial(controller.turn_on, args.entity_id),
         "off": partial(controller.turn_off, args.entity_id),
         "toggle": partial(controller.toggle, args.entity_id),
-        "get": partial(controller.get_state, args.entity_id)
+        "get": partial(controller.get_state, args.entity_id),
+        "brightness-raw": partial(controller.brightness_raw, args.entity_id)
     }
     
     success = actions[args.action]()
