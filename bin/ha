@@ -6,7 +6,7 @@ Home Assistant Light Control Script
 Refactored with Pydantic models for type safety and validation.
 """
 
-import ha_secrets
+from ha_secrets import HA_TOKEN
 import argparse
 import sys
 import typing
