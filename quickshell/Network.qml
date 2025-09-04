@@ -1,16 +1,11 @@
 import QtQuick;
 import QtQuick.Layouts;
-import Quickshell;
 import Quickshell.Io;
-import Quickshell.Services.UPower
 
-ColumnLayout {
+Module {
     id: root;
 
-    Layout.alignment: Qt.AlignBottom
-
-    spacing: 5;
-    implicitWidth: text.implicitWidth;
+    color: text.color
 
     Text {
         Layout.alignment: Qt.AlignCenter
@@ -79,12 +74,5 @@ ColumnLayout {
                 }
             }
         }
-    }
-
-    Rectangle {
-        Layout.alignment: Qt.AlignBottom
-        implicitHeight: 2;
-        implicitWidth: text.width + 5;
-        color: text.color;
     }
 }

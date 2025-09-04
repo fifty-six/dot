@@ -2,20 +2,17 @@ import QtQuick;
 import QtQuick.Layouts;
 import Quickshell;
 
-ColumnLayout {
+Module {
     id: root
-    spacing: 5;
+    color: text.color
 
-    Layout.alignment: Qt.AlignBottom
-
-    Rectangle { 
+    Item { 
         id: rect
 
         Layout.alignment: Qt.AlignHCenter
 
         implicitWidth: text.width + 10
         implicitHeight: text.height
-        color: "transparent"
 
         // State moment
         property bool is_date: false;
@@ -59,12 +56,5 @@ ColumnLayout {
                 rect.is_date = !rect.is_date
             }
         }
-    }
-
-    Rectangle {
-        Layout.alignment: Qt.AlignBottom
-        implicitHeight: 2;
-        implicitWidth: text.width + 10;
-        color: text.color;
     }
 }

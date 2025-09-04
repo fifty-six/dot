@@ -38,11 +38,12 @@ Item {
     }
 
 
-    ColumnLayout {
+    Module {
         id: cols
 
-        spacing: 3;
         implicitWidth: text.implicitWidth;
+
+        color: text.color
 
         RowLayout { 
             id: rows
@@ -130,11 +131,11 @@ Item {
             }
         }
 
-        Rectangle {
-            Layout.alignment: Qt.AlignBottom
-            implicitHeight: 2;
-            implicitWidth: rows.width + 5;
-            color: text.color;
-        }
+        // Rectangle {
+        //     Layout.alignment: Qt.AlignBottom
+        //     implicitHeight: 2;
+        //     implicitWidth: rows.width + 5;
+        //     color: text.color;
+        // }
     }
 }

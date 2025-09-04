@@ -6,20 +6,13 @@ import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 
 Item { 
-    Layout.alignment: Qt.AlignBottom
-    width: root.width
+    // I still don't get why I need this lowkey
+    implicitWidth: root.implicitWidth
+    implicitHeight: root.implicitHeight
 
-        PwObjectTracker {
-        objects: [ Pipewire.defaultAudioSink, Pipewire.defaultAudioSource]
-    }
-
-    ColumnLayout {
+    Module {
         id: root
-        spacing: 5
-
-        anchors {
-            bottom: parent.bottom
-        }
+        color: text.color
 
         RowLayout { 
             id: rows
@@ -28,7 +21,7 @@ Item {
             spacing: 5
 
             Text {
-                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                Layout.alignment: Qt.AlignLeft
 
                 id: text
 
@@ -59,15 +52,12 @@ Item {
             }
 
         }
-
-        Rectangle {
-            Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
-            implicitHeight: 2;
-            implicitWidth: rows.implicitWidth + 10
-            color: text.color;
-        }
-
     }
+
+    PwObjectTracker {
+        objects: [ Pipewire.defaultAudioSink, Pipewire.defaultAudioSource]
+    }
+
 
     MouseArea {
         anchors.fill: root

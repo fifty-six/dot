@@ -90,15 +90,8 @@ Scope {
 
                     Volume { }
 
-                    Brightness {}
-
-                    Module {
-                        Text {
-                            color: "white"
-                            text: "among us"
-                            font.family: "Fira Code"
-                            font.pointSize: 10
-                        }
+                    Brightness {
+                        implicitWidth: 35
                     }
 
                     Light {
