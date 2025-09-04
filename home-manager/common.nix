@@ -61,6 +61,11 @@ in
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".local/share/zsh/.zimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/zimrc";
+  };
+
+  xdg.configFile = {
     ".config/latexmk/latexmkrc".text = ''
         $pdflatex = 'pdflatex --shell-escape %O %S';
     '';
@@ -74,14 +79,11 @@ in
         --ozone-platform-hint=auto
     '';
 
-    ".local/share/zsh/.zimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/zimrc";
-  };
-
-  xdg.configFile = {
     "ncdu/config".text = "--color dark";
     "wezterm/config.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/wezterm.lua";
     "ntfy/client.yml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/ntfy.yml";
     "jj/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/jj.toml";
+    "niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/niri.kdl";
   };
 
   # Home Manager can also manage your environment variables through
