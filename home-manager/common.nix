@@ -28,6 +28,7 @@ in
     pkgs.jjui
     pkgs.comma
     pkgs.nix-output-monitor
+    pkgs.basedpyright
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
