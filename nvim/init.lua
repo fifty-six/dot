@@ -31,6 +31,8 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
 vim.api.nvim_create_autocmd("BufEnter", { pattern = "*.fut", callback = function()
     vim.api.nvim_buf_set_option(
         vim.api.nvim_get_current_buf(),

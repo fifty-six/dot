@@ -114,12 +114,12 @@ return {
             formatters_by_ft = {
                 python = { "isort", "black" },
                 rust = { "rustfmt", lsp_format = "fallback" },
-                nix = { "nixd" }
+                nix = { "alejandra", "nixd", stop_after_first=true }
             }
         },
-        config = function()
+        init = function()
             vim.o.formatexpr = "v:lua.require'conform'.formatexpr()";
-        end
+        end,
     },
 
     {
