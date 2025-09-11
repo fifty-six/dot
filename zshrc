@@ -35,7 +35,9 @@ source <(carapace _carapace)
 
 export PATH="${HOME}/.local/share/cargo/bin:${HOME}/.zvm/bin/:${HOME}/.local/bin:$PATH"
 
-systemctl --user import-environment PATH
+if (( $+commands[systemctl] )); then
+    systemctl --user import-environment PATH
+fi
 
 if [ "$TERM" = "screen" ]; then; TERM=screen-256color; fi
 
