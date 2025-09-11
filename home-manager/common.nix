@@ -28,7 +28,6 @@ in
     pkgs.ntfy-sh
     pkgs.jjui
     pkgs.comma
-    pkgs.llvmPackages_20.bintools-unwrapped
     pkgs.nix-output-monitor
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
