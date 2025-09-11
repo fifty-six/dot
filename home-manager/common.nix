@@ -3,7 +3,6 @@
 let 
     HOME = builtins.getEnv "HOME";
     inherit (import ./colors.nix) colors;
-    inherit (import ./swaync.nix) swaynccfg;
     mklink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
@@ -57,7 +56,6 @@ in
     ".config/latexmk/latexmkrc".text = ''
         $pdflatex = 'pdflatex --shell-escape %O %S';
     '';
-
     ".config/chromium-flags.conf".text = ''
         --enable-features=VaapiVideoDecoder,VaapiIgnoreDriverChecks
         --enable-gpu-rasterization
@@ -92,16 +90,6 @@ in
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
-  };
-
-  xdg.userDirs = {
-    enable = true;
-    publicShare = "$HOME/media/public";
-    desktop = "$HOME/media/desktop";
-    music = "$HOME/media/music";
-    pictures = "$HOME/media/pictures";
-    videos = "$HOME/media/videos";
-    templates = "$HOME/media/templates";
   };
 
   home.sessionPath = [
@@ -161,16 +149,6 @@ in
     Service = {
         ExecStart = "/usr/bin/kdeconnectd";
     };
-  };
-
-  services.clipse = {
-      enable = true;
-  };
-
-  services.swaync = {
-    enable = true;
-    settings = swaynccfg;
-    style = mklink ../swaync.css;
   };
 
   programs.nushell = {
@@ -463,7 +441,7 @@ in
     };
   };
 
-  nix = {
+  nix = lib.mkDefault {
     package = pkgs.nix;
     settings.use-xdg-base-directories = true;
     settings.experimental-features = [ "nix-command" "flakes" ];
