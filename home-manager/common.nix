@@ -376,77 +376,77 @@ in
     };
   };
 
-  programs.wezterm = {
-    enable = true;
+  # programs.wezterm = {
+  #   enable = true;
 
-    enableZshIntegration = true;
-    enableBashIntegration = true;
+  #   enableZshIntegration = true;
+  #   enableBashIntegration = true;
 
-    extraConfig = ''
-      -- Load user config
-      local ok, user_config = pcall(require, 'config')
-      if not ok then
-        return {}
-      end
-      
-      -- Return merged config
-      return user_config
+  #   extraConfig = ''
+  #     -- Load user config
+  #     local ok, user_config = pcall(require, 'config')
+  #     if not ok then
+  #       return {}
+  #     end
+  #     
+  #     -- Return merged config
+  #     return user_config
 
-      -- local config = {}
-      -- 
-      -- if wezterm.config_builder then
-      --   config = wezterm.config_builder()
-      -- end
-      -- 
-      -- config.color_scheme = 'custom'
-      -- config.font = wezterm.font('FiraCode Nerd Font Ret')
-      -- config.font_size = 12
-      -- config.harfbuzz_features = {'ss08'}
-      -- -- config.disable_ligatures_in_cursor_row = true
-      -- 
-      -- config.window_padding = {
-      --   left = 10,
-      --   right = 10,
-      --   top = 10,
-      --   bottom = 10,
-      -- }
-      -- 
-      -- config.window_background_opacity = 0.7
-      -- 
-      -- return config
-    '';
+  #     -- local config = {}
+  #     -- 
+  #     -- if wezterm.config_builder then
+  #     --   config = wezterm.config_builder()
+  #     -- end
+  #     -- 
+  #     -- config.color_scheme = 'custom'
+  #     -- config.font = wezterm.font('FiraCode Nerd Font Ret')
+  #     -- config.font_size = 12
+  #     -- config.harfbuzz_features = {'ss08'}
+  #     -- -- config.disable_ligatures_in_cursor_row = true
+  #     -- 
+  #     -- config.window_padding = {
+  #     --   left = 10,
+  #     --   right = 10,
+  #     --   top = 10,
+  #     --   bottom = 10,
+  #     -- }
+  #     -- 
+  #     -- config.window_background_opacity = 0.7
+  #     -- 
+  #     -- return config
+  #   '';
 
-    colorSchemes = {
-      "custom" = {
-        foreground = colors.foreground;
-        background = colors.background;
-        selection_fg = colors.selection.foreground;
-        selection_bg = colors.selection.background;
-        cursor_fg = colors.cursor.text;
-        cursor_bg = colors.cursor.cursor;
-        cursor_border = colors.cursor.cursor;
+  #   colorSchemes = {
+  #     "custom" = {
+  #       foreground = colors.foreground;
+  #       background = colors.background;
+  #       selection_fg = colors.selection.foreground;
+  #       selection_bg = colors.selection.background;
+  #       cursor_fg = colors.cursor.text;
+  #       cursor_bg = colors.cursor.cursor;
+  #       cursor_border = colors.cursor.cursor;
 
-        ansi = with colors.normal; [
-          black red green yellow blue magenta cyan white
-        ];
-        brights = with colors.bright; [
-          black red green yellow blue magenta cyan white
-        ];
+  #       ansi = with colors.normal; [
+  #         black red green yellow blue magenta cyan white
+  #       ];
+  #       brights = with colors.bright; [
+  #         black red green yellow blue magenta cyan white
+  #       ];
 
-        tab_bar = {
-          background = colors.tab.inactive.background;
-          active_tab = {
-            bg_color = colors.tab.active.background;
-            fg_color = colors.tab.active.foreground;
-          };
-          inactive_tab = {
-            bg_color = colors.tab.inactive.background;
-            fg_color = colors.tab.inactive.foreground;
-          };
-        };
-      };
-    };
-  };
+  #       tab_bar = {
+  #         background = colors.tab.inactive.background;
+  #         active_tab = {
+  #           bg_color = colors.tab.active.background;
+  #           fg_color = colors.tab.active.foreground;
+  #         };
+  #         inactive_tab = {
+  #           bg_color = colors.tab.inactive.background;
+  #           fg_color = colors.tab.inactive.foreground;
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   programs.zsh = {
     enable = true;
