@@ -29,6 +29,7 @@ in
     pkgs.comma
     pkgs.nix-output-monitor
     pkgs.basedpyright
+    pkgs.alejandra
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

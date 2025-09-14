@@ -114,7 +114,7 @@ return {
             formatters_by_ft = {
                 python = { "isort", "black" },
                 rust = { "rustfmt", lsp_format = "fallback" },
-                nix = { "alejandra", "nixd", stop_after_first=true }
+                nix = { "alejandra" }
             }
         },
         init = function()
