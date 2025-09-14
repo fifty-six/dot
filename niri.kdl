@@ -272,7 +272,7 @@ layout {
 // spawn-at-startup "swaybg"
 spawn-at-startup "com.discordapp.Discord"
 spawn-at-startup "rfirefox"
-spawn-at-startup "keepassxc"
+spawn-at-startup "wlkeepassxc"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# just beautiful really
+QT_QPA_PLATFORM=wayland ECORE_EVAS_ENGINE=wayland_egl ELM_ENGINE=wayland_egl SDL_VIDEODRIVER=wayland _JAVA_AWT_WM_NONREPARENTING=1 keepassxc
