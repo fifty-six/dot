@@ -63,58 +63,6 @@
         ];
       };
     };
-    homeconfig = {pkgs, ...}: {
-      home.username = "home";
-      home.homeDirectory = "/Users/home";
-      # Let home-manager install and manage itself.
-      programs.home-manager.enable = true;
-
-      home.packages = [
-        pkgs.fzf
-        pkgs.ripgrep
-        pkgs.jujutsu
-        pkgs.alejandra
-        pkgs.black
-        pkgs.isort
-        pkgs.rustfmt
-        pkgs.bat
-      ];
-
-      programs.zsh = {
-        enable = true;
-        shellAliases = {
-            switch = "sudo darwin-rebuild switch --flake ~/dot/home-manager/ponos -v |& nom";
-        };
-      };
-
-      imports = [
-        ../common.nix
-      ];
-
-      # home.sessionVariables = {
-      #   EDITOR = "vim";
-      # };
-
-      # home.file.".vimrc".source = ./vim_configuration;
-
-      # programs.zsh = {
-      #   enable = true;
-      #   shellAliases = {
-      #     switch = "darwin-rebuild switch --flake ~/.config/nix";
-      #   };
-      # };
-
-      # programs.git = {
-      #   enable = true;
-      #   userName = "$FIRSTNAME $LASTNAME";
-      #   userEmail = "me@example.com";
-      #   ignores = [ ".DS_Store" ];
-      #   extraConfig = {
-      #     init.defaultBranch = "main";
-      #     push.autoSetupRemote = true;
-      #   };
-      # };
-    };
   in {
     darwinConfigurations."ponos" = nix-darwin.lib.darwinSystem {
       specialArgs = {inherit inputs;};
@@ -125,7 +73,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.verbose = true;
-          home-manager.users.home = homeconfig;
+          home-manager.users.home = ./home.nix;
         }
       ];
     };
