@@ -31,6 +31,7 @@
       system.keyboard.enableKeyMapping = true;
       system.keyboard.remapCapsLockToControl = true;
 
+      system.defaults.WindowManager.StandardHideDesktopIcons = true;
       nixpkgs.hostPlatform = "aarch64-darwin";
 
       # Declare the user that will be running `nix-darwin`.
