@@ -181,3 +181,7 @@ alias hm-switch="home-manager --log-format internal-json switch -v |& nom  --jso
 
 bindkey "^T" fzf-tab-complete
 bindkey "^I" complete-word
+
+if [ -f ~/.zshrc.local ]; then
+    . ~/.zshrc.local
+fi
