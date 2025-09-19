@@ -244,7 +244,6 @@ in
 
     font = {
         name = "FiraCode Nerd Font Ret";
-        size = 12;
         size = if pkgs.stdenv.isDarwin then 18 else 12;
     };
 

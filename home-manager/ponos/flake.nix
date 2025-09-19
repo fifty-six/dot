@@ -32,6 +32,7 @@
       system.keyboard.remapCapsLockToControl = true;
 
       system.defaults.WindowManager.StandardHideDesktopIcons = true;
+
       nixpkgs.hostPlatform = "aarch64-darwin";
 
       # Declare the user that will be running `nix-darwin`.
@@ -56,12 +57,27 @@
         # onActivation.cleanup = "uninstall";
 
         taps = [];
+        brews = [
+            "mas"
+            "uv"
+            "ruff"
+        ];
         casks = [
           "slack"
           "kitty"
           "x2goclient"
           "xquartz"
+          "inkscape"
+          # kde connect
+          "soduto"
+          # java
+          "temurin"
+          "android-platform-tools"
+          "neovide-app"
         ];
+        masApps = {
+            "Wireguard" = 1451685025;
+        };
       };
     };
   in {
