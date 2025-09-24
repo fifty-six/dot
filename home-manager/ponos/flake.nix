@@ -58,6 +58,7 @@
 
         taps = [];
         brews = [
+            "helix"
             "mas"
             "uv"
             "ruff"
