@@ -144,7 +144,7 @@ if alias z &>/dev/null; then
     unalias z
 fi
 
-if (( $+commands[exa] )); then
+if (( $+commands[eza] )); then
     alias ls="eza"
     alias l="eza -lg"
     alias ll="eza -lg"
