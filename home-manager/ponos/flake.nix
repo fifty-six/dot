@@ -62,6 +62,11 @@
             "mas"
             "uv"
             "ruff"
+            "aria2"
+            "ddrescue"
+            "age"
+            "gpg"
+            "nmap"
         ];
         casks = [
           "slack"
@@ -76,6 +81,8 @@
           "android-platform-tools"
           "neovide-app"
           "tailscale-app"
+          "syncthing-app"
+          "submariner"
         ];
         masApps = {
             "Wireguard" = 1451685025;
