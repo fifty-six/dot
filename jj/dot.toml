@@ -1,0 +1,3 @@
+--when.repositories = ["~/dot"]
+[user]
+email = "git@fiftysix.dev"

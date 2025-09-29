@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../common.nix
+    ../work-common.nix
   ];
 
   home.username = "home";
