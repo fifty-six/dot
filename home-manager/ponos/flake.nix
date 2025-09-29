@@ -54,7 +54,7 @@
       system.primaryUser = "home";
       homebrew = {
         enable = true;
-        # onActivation.cleanup = "uninstall";
+        onActivation.cleanup = "zap";
 
         taps = [];
         brews = [
@@ -75,6 +75,7 @@
           "temurin"
           "android-platform-tools"
           "neovide-app"
+          "tailscale-app"
         ];
         masApps = {
             "Wireguard" = 1451685025;
