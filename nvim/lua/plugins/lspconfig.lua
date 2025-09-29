@@ -69,22 +69,22 @@ local on_attach = function(_, bufnr)
 end
 
 return {
-    {
-        'Julian/lean.nvim',
-        event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+    -- {
+    --     'Julian/lean.nvim',
+    --     event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
 
-        dependencies = {
-            'neovim/nvim-lspconfig',
-            'nvim-lua/plenary.nvim',
-        },
+    --     dependencies = {
+    --         'neovim/nvim-lspconfig',
+    --         'nvim-lua/plenary.nvim',
+    --     },
 
-        opts = {
-            lsp = {
-                on_attach = on_attach,
-            },
-            mappings = true,
-        }
-    },
+    --     opts = {
+    --         lsp = {
+    --             on_attach = on_attach,
+    --         },
+    --         mappings = true,
+    --     }
+    -- },
 
     {
         'mrcjkb/rustaceanvim',
