@@ -9,3 +9,6 @@ tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_non
 [revset-aliases]
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
 'closest_nonempty(to)' = 'heads(::to ~ empty())'
+
+[git]
+private-commits = "description(glob:'private:*') | description(glob:'__*')"
