@@ -32,5 +32,10 @@
 
         modules = [ ./vessel/home.nix ];
       };
+
+      homeConfigurations."yusuf.bham@zetier.com" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./work/work.nix ];
+      };
     };
 }
