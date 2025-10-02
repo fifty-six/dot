@@ -22,4 +22,44 @@ in
     settings = swaynccfg;
     style = mklink ../swaync.css;
   };
+
+  systemd.user.services.ntfy = {
+    Unit = {
+        Description = "ntfy";
+
+      After = ["graphical-session.target"];
+    };
+    Install = { 
+            WantedBy = ["graphical-session.target"]; 
+
+        };
+    Service = {
+        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
+    };
+  };
+
+  systemd.user.services.easyeffects = {
+    Unit = {
+      Description = "Easyeffects Daemon";
+      Requires = ["pipewire.service"];
+      After = ["graphical-session.target"];
+    };
+    Install = { WantedBy = ["graphical-session.target"]; };
+    Service = {
+      ExecStart = "/usr/bin/easyeffects --gapplication-service";
+    };
+  };
+
+  systemd.user.services.kdeconnectd = {
+    Unit = {
+        Description = "KDE Connect";
+
+      After = ["graphical-session.target"];
+    };
+    Install = { WantedBy = ["graphical-session.target"]; };
+    Service = {
+        ExecStart = "/usr/bin/kdeconnectd";
+    };
+  };
+
 }

@@ -106,53 +106,6 @@ in
     "${config.home.homeDirectory}/dot/bin"
   ];
 
-  # yes i am cheating
-    # home.activation.swaync = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    #       if /usr/bin/systemctl --user status swaync > /dev/null; then 
-    #           run /usr/bin/systemctl --user enable --now swaync
-    #       fi
-    # '';
-
-  # TODO: enable only if exists.
-  systemd.user.services.ntfy = {
-    Unit = {
-        Description = "ntfy";
-
-      After = ["graphical-session.target"];
-    };
-    Install = { 
-            WantedBy = ["graphical-session.target"]; 
-
-        };
-    Service = {
-        ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
-    };
-  };
-
-  systemd.user.services.easyeffects = {
-    Unit = {
-      Description = "Easyeffects Daemon";
-      Requires = ["pipewire.service"];
-      After = ["graphical-session.target"];
-    };
-    Install = { WantedBy = ["graphical-session.target"]; };
-    Service = {
-      ExecStart = "/usr/bin/easyeffects --gapplication-service";
-    };
-  };
-
-  systemd.user.services.kdeconnectd = {
-    Unit = {
-        Description = "KDE Connect";
-
-      After = ["graphical-session.target"];
-    };
-    Install = { WantedBy = ["graphical-session.target"]; };
-    Service = {
-        ExecStart = "/usr/bin/kdeconnectd";
-    };
-  };
-
   programs.nushell = {
     enable = true;
 
@@ -429,6 +382,7 @@ in
     '';
   };
 
+  # TODO: work 
   programs.git = {
     enable = true;
     
