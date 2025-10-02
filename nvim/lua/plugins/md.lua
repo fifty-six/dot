@@ -9,6 +9,7 @@ return {
         config = function()
             require("obsidian").setup({
                 dir = "~/src/wiki",
+                legacy_commands = false,
                 daily_notes = {
                     folder = "daily",
                     template = "daily_obs.md",
@@ -19,7 +20,7 @@ return {
                 },
                 completion = {
                     nvim_cmp = true,
-                }
+                },
             })
         end
     },
