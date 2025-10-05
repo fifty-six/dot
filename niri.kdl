@@ -80,7 +80,7 @@ gestures {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
-output "eDP-1" {
+/- output "eDP-1" {
     // Uncomment this line to disable this output.
     // off
 
@@ -109,6 +109,10 @@ output "eDP-1" {
     // If the position is unset or results in an overlap, the output is instead placed
     // automatically.
     // position x=1280 y=0
+}
+
+output "BOE NE135A1M-NY1 Unknown" {
+    scale 2.0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -633,7 +637,7 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Mod+Shift+S { screenshot; }
+    Mod+Shift+S { screenshot show-pointer=false; }
     // Ctrl+Print { screenshot-screen; }
     // Alt+Print { screenshot-window; }
 
