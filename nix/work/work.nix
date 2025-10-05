@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ../common.nix
     ../work-common.nix
@@ -37,10 +38,10 @@
     Unit = {
       Description = "Atuin daemon";
 
-      After = ["graphical-session.target"];
+      After = [ "graphical-session.target" ];
     };
     Install = {
-      WantedBy = ["graphical-session.target"];
+      WantedBy = [ "graphical-session.target" ];
     };
     Service = {
       ExecStart = "${pkgs.atuin}/bin/atuin daemon";

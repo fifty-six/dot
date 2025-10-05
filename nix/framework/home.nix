@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
-  util = import ./../util.nix {inherit pkgs;};
-in {
+}:
+let
+  util = import ./../util.nix { inherit pkgs; };
+in
+{
   imports = [
     ../common.nix
     ../linux.nix
