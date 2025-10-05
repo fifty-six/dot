@@ -1,11 +1,19 @@
-{ config, pkgs, lib, ... }:
-
 {
-    imports = [
-        ../common.nix
-        ../linux.nix
-    ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ../common.nix
+    ../linux.nix
+  ];
 
-    home.username = "toor";
-    home.homeDirectory = "/home/toor";
+  home.packages = [
+    pkgs.arion
+    pkgs.neovim
+  ];
+
+  home.username = "toor";
+  home.homeDirectory = "/home/toor";
 }
