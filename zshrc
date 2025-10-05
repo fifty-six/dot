@@ -113,7 +113,7 @@ autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
-if [ ! ${SSH_AUTH_SOCK:-} ]; then
+if [[ ! ${SSH_AUTH_SOCK:-} || (-e "${XDG_RUNTIME_DIR}/ssh-agent.socket" && !${SSH_AUTH_SOCK:-} == *agent*) ]]; then
     export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 fi
 
