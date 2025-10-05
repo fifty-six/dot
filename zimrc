@@ -8,13 +8,14 @@ zmodule willghatch/zsh-cdr
 # zmodule completion
 zmodule zsh-users/zsh-completions --fpath src
 
-zmodule junegunn/fzf --fpath shell/key-bindings.zsh 
-
 zmodule wfxr/forgit
 zmodule junegunn/fzf-git.sh
 
-zmodule zdharma-continuum/fast-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
+zmodule zdharma-continuum/fast-syntax-highlighting
+
+zmodule junegunn/fzf --fpath shell/key-bindings.zsh 
+
 
 # fzf tab complete
 # BUG: breaks my complete with spaces to going from w1\ w2 to w1\\ w2 
