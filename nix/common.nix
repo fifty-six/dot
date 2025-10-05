@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-    HOME = builtins.getEnv "HOME";
+    HOME = config.home.homeDirectory;
     inherit (import ./colors.nix) colors;
     mklink = config.lib.file.mkOutOfStoreSymlink;
 in
@@ -20,7 +20,7 @@ in
   ];
 
   home.file = {
-    ".local/share/zsh/.zimrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/zimrc";
+    ".local/share/zsh/.zimrc".source = mklink "${config.home.homeDirectory}/dot/zimrc";
   };
 
   xdg.configFile = {
@@ -35,14 +35,16 @@ in
         --disable-gpu-driver-workarounds
         --ozone-platform-hint=auto
     '';
-
-    "nvim".source = mklink "${config.home.homeDirectory}/dot/nvim";
     "ncdu/config".text = "--color dark";
-    "wezterm/config.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/wezterm.lua";
+
+    "nvim".source = mklink "${HOME}/dot/nvim";
+    "niri/config.kdl".source = mklink "${HOME}/dot/niri.kdl";
+
+    "wezterm/config.lua".source = ./../wezterm.lua;
     "ntfy/client.yml".source = ./../ntfy.yml;
+
     "jj/config.toml".source = ./../jj/jj.toml;
     "jj/conf.d/diffconflicts.toml".source = ./../jj/diffconflicts.toml;
-    "niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/niri.kdl";
   };
 
   home.sessionVariables = {
