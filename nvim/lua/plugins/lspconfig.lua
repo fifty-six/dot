@@ -117,6 +117,7 @@ return {
                     dafny = {},
                     jsonnet_ls = {},
                     nixd = {},
+                    nil_ls = {},
                     ts_ls = {},
                     purescriptls = {},
                     jinja_lsp = {},
