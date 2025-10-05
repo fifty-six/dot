@@ -194,13 +194,17 @@ in
 
     package = pkgs.emptyDirectory;
 
-    userName = "Yusuf Bham";
-    userEmail = "ybham6@gmail.com";
-
-    difftastic = {
-        color = "always";
-        enable = true;
+    settings.user = {
+      name = "Yusuf Bham";
+      email = "ybham6@gmail.com";
     };
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+
+    options.color = "always";
   };
 
   nix = lib.mkDefault {

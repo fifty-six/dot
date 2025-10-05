@@ -7,6 +7,6 @@
   };
 
   programs.git = lib.mkForce {
-    userEmail = "yusuf.bham@zetier.com";
+    settings.user.email = "yusuf.bham@zetier.com";
   };
 }
