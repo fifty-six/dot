@@ -1,4 +1,3 @@
-.dotter/cache.toml
 .jj
 bin/ha_secrets.py
 __pycache__
