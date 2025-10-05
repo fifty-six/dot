@@ -4,7 +4,7 @@ After=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/sh -c 'swaybg -m fill -i ~/.local/share/desktop/back.png'
+ExecStart=/usr/bin/sh -c 'swaybg -m fill -i ~/media/desktop/back.png'
 
 [Install]
 WantedBy=river.target
