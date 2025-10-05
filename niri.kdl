@@ -69,7 +69,7 @@ input {
 }
 
 gestures {
-    hot-corners { 
+    hot-corners {
         off
     }
 }
@@ -226,13 +226,13 @@ layout {
         // radius. It has to assume that windows have square corners, leading to
         // shadow artifacts inside the CSD rounded corners. This setting fixes
         // those artifacts.
-        // 
+        //
         // However, instead you may want to set prefer-no-csd and/or
         // geometry-corner-radius. Then, niri will know the corner radius and
         // draw the shadow correctly, without having to draw it behind the
         // window. These will also remove client-side shadows if the window
         // draws any.
-        // 
+        //
         // draw-behind-window true
 
         // You can change how shadows look. The values below are in logical
@@ -272,7 +272,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
 // spawn-at-startup "systemctl --user restart river.target"
-// TODO: troubleshoot the systemd service 
+// TODO: troubleshoot the systemd service
 // spawn-at-startup "swaybg"
 spawn-at-startup "com.discordapp.Discord"
 spawn-at-startup "rfirefox"
@@ -348,7 +348,7 @@ window-rule {
 // window-rule {
 //     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
 //     match at-startup=true
-// 
+//
 //     open-on-workspace "keepass"
 //     open-maximized true
 // }
@@ -382,10 +382,10 @@ window-rule {
 // window-rule {
 //     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
 //     match title=r#"Browser Access Request$"#
-// 
+//
 //     open-floating true
 //     open-focused true
-// 
+//
 // }
 
 // Example: enable rounded corners for all windows.
