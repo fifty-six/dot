@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  util = import ./../util.nix {inherit lib;};
+  util = import ./../util.nix {inherit pkgs;};
 in {
   imports = [
     ../common.nix
@@ -16,7 +16,7 @@ in {
 
   xdg.configFile = util.toFileTree {
     pipewire = {
-      "pipewire.conf.d"."pipewire.conf".text = builtins.toJSON {
+      "pipewire.conf.d"."pipewire.conf".source = util.toJSON {
         context.properties = {
           # I'm gonna be real I don't remember why I have these
           default.clock.rate = 44100;
@@ -25,12 +25,12 @@ in {
           default.clock.max-quantum = 16384;
         };
       };
-      "pipewire-pulse.conf.d"."pipewire-pulse.conf".text = builtins.toJSON {
+      "pipewire-pulse.conf.d"."pipewire-pulse.conf".source = util.toJSON {
         pulse.properties = {
           # Framework speaker has popping without this.
           # Thank you to this reddit post for the solution
           # https://www.reddit.com/r/archlinux/comments/1kcns3u/pipewire_ungodly_crackling/mq4u6gs/
-          pulse.min.quantum = 512 / 48000;
+          pulse.min.quantum = "512/48000";
         };
       };
     };
