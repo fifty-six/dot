@@ -69,8 +69,8 @@ in
 
     "ncdu/config".text = "--color dark";
     "wezterm/config.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/wezterm.lua";
-    "ntfy/client.yml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/ntfy.yml";
-    "jj/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/jj/jj.toml";
+    "ntfy/client.yml".source = ./../ntfy.yml;
+    "jj/config.toml".source = ./../jj/jj.toml;
     "niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/niri.kdl";
   };
 
