@@ -24,4 +24,20 @@
     pkgs.hyperfine
     pkgs.lua-language-server
   ];
+
+  programs.atuin.settings.daemon.enabled = true;
+
+  systemd.user.services.atuin-daemon = {
+    Unit = {
+      Description = "Atuin daemon";
+
+      After = ["graphical-session.target"];
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.atuin}/bin/atuin daemon";
+    };
+  };
 }
