@@ -23,6 +23,10 @@
     pkgs.eza
     pkgs.hyperfine
     pkgs.lua-language-server
+    pkgs.typescript-language-server
+    pkgs.evil-helix
+    pkgs.mosh
+    pkgs.glow
   ];
 
   programs.atuin.settings.daemon.enabled = true;
