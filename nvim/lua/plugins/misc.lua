@@ -245,6 +245,9 @@ return {
              ]]
          end
      },
+
+     { "sindrets/diffview.nvim" },
+
      -- Uses the sign column line left of line numbers for git info
      {
          'lewis6991/gitsigns.nvim',
@@ -781,7 +784,12 @@ return {
                 miniclue.gen_clues.z(),
             },
         })
-    end }
+    end },
+
+    -- oops
+    { "ntpeters/vim-better-whitespace" },
+
+    { "jinh0/eyeliner.nvim" },
 
     --    {
     --        "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
