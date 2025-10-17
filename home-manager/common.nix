@@ -16,6 +16,7 @@ in
     pkgs.nix-output-monitor
     pkgs.basedpyright
     pkgs.alejandra
+    pkgs.eza
   ];
 
   home.file = {
