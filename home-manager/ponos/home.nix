@@ -26,6 +26,8 @@
     pkgs.bat
     pkgs.p7zip
     pkgs.distant
+    pkgs.python3
+    pkgs.glow
   ];
 
   programs.kitty.settings.macos_option_as_alt = "both";
