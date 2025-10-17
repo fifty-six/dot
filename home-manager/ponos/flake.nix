@@ -83,6 +83,7 @@
           "tailscale-app"
           "syncthing-app"
           "submariner"
+          "nikitabobko/tap/aerospace"
         ];
         masApps = {
             "Wireguard" = 1451685025;
