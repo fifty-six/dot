@@ -36,7 +36,7 @@
     enable = true;
 
     shellAliases = {
-      switch = "sudo darwin-rebuild switch --flake ~/dot/home-manager/ponos -v |& nom";
+      switch = "sudo darwin-rebuild switch --flake ~/dot/home-manager -v |& nom";
     };
   };
 
