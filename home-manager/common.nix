@@ -24,10 +24,10 @@ in
   };
 
   xdg.configFile = {
-    ".config/latexmk/latexmkrc".text = ''
+    "latexmk/latexmkrc".text = ''
         $pdflatex = 'pdflatex --shell-escape %O %S';
     '';
-    ".config/chromium-flags.conf".text = ''
+    "chromium-flags.conf".text = ''
         --enable-features=VaapiVideoDecoder,VaapiIgnoreDriverChecks
         --enable-gpu-rasterization
         --ignore-gpu-blacklist
