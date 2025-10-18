@@ -36,6 +36,7 @@ in
         --ozone-platform-hint=auto
     '';
 
+    "nvim".source = mklink "${config.home.homeDirectory}/dot/nvim";
     "ncdu/config".text = "--color dark";
     "wezterm/config.lua".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dot/wezterm.lua";
     "ntfy/client.yml".source = ./../ntfy.yml;
