@@ -1,12 +1,12 @@
 { config, pkgs, lib, ... }:
 
-let 
+let
     HOME = builtins.getEnv "HOME";
     inherit (import ./colors.nix) colors;
     mklink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
-  home.stateVersion = "25.11"; # Please read the comment before changing.
+  home.stateVersion = "25.11";
 
   home.packages = [
     pkgs.nixd
@@ -188,10 +188,9 @@ in
     '';
   };
 
-  # TODO: work 
   programs.git = {
     enable = true;
-    
+
     package = pkgs.emptyDirectory;
 
     userName = "Yusuf Bham";
