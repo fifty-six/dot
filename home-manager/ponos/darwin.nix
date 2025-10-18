@@ -35,7 +35,9 @@
     enable = true;
     onActivation.cleanup = "zap";
 
-    taps = [];
+    taps = [
+      "nikitabobko/tap"
+    ];
     brews = [
       "helix"
       "mas"
