@@ -1,102 +1,60 @@
 return {
-    { "hrsh7th/nvim-cmp",
-        dependencies = { "hrsh7th/cmp-omni", "hrsh7th/cmp-nvim-lsp", "kdheepak/cmp-latex-symbols" },
-        init = function()
-            vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
-        end,
+	{
+		"saghen/blink.cmp",
+		-- todo: cmp-latex-symbols
+		dependencies = { "rafamadriz/friendly-snippets" },
 
-        config = function()
-            local function border(hl_name)
-                return {
-                    { "╭", hl_name },
-                    { "─", hl_name },
-                    { "╮", hl_name },
-                    { "│", hl_name },
-                    { "╯", hl_name },
-                    { "─", hl_name },
-                    { "╰", hl_name },
-                    { "│", hl_name },
-                }
-            end
+		version = "1.*",
 
-            local cmp = require("cmp")
-            -- local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			-- All presets have the following mappings:
+			-- C-space: Open menu or open docs if already open
+			-- C-n/C-p or Up/Down: Select next/previous item
+			-- C-e: Hide menu
+			-- C-k: Toggle signature help (if signature.enabled = true)
+			keymap = {
+				preset = "enter",
 
-            -- require("cmp_nvim_ultisnips").setup{}
+				["<Tab>"] = { "select_next", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
+			},
 
-            default_sources = {
-                { name = "nvim_lsp" },
-                { name = 'mkdnflow' },
-                { name = "ultisnips" },
-                { name = "buffer" },
-                { name = "nvim_lua" },
-                { name = "path" },
-                { name = "omni" },
-                { name = "otter" },
-            }
+			appearance = {
+				nerd_font_variant = "mono",
+			},
 
-            cmp.setup {
-                window = {
-                    completion = {
-                        border = border "CmpBorder",
-                        winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-                    },
-                    documentation = cmp.config.window.bordered()
-                },
-                -- I think this was exploding something
-                -- snippet = {
-                --     expand = function(args)
-                --         -- require("luasnip").lsp_expand(args.body)
-                --         vim.fn["UltiSnips#Anon"](args.body)
-                --     end,
-                -- },
-                mapping = {
-                    ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    ["<C-n>"] = cmp.mapping.select_next_item(),
+			completion = {
+				menu = {
+					border = "rounded",
+				},
+				-- TODO: can we not show this on initial typing, only on tab?
+				documentation = {
+					window = {
+						border = "rounded",
+					},
+					auto_show = true,
+					auto_show_delay_ms = 0,
+				},
+			},
 
-                    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+				providers = {
+					-- When the LSP is being really slow, having buffer
+					-- completions while we wait is really nice.
+					lsp = {
+						timeout_ms = 200,
+						fallback = {},
+						score_offset = 100,
+					},
+				},
+			},
 
-                    ["<C-Space>"] = cmp.mapping.complete(),
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
 
-                    ["<C-e>"] = cmp.mapping.close(),
-
-                    ["<CR>"] = cmp.mapping.confirm {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = false,
-                    },
-
-                    ["<Tab>"] = cmp.mapping(
-                        function(fallback)
-                            if cmp.visible() then
-                                cmp.select_next_item()
-                                -- elseif require("luasnip").expand_or_jumpable() then
-                                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-                            else
-                                fallback()
-                            end
-                        end, { "i", "s", }
-                    ),
-                    ["<S-Tab>"] = cmp.mapping(
-                        function(fallback)
-                            if cmp.visible() then
-                                cmp.select_prev_item()
-                                -- elseif require("luasnip").jumpable(-1) then
-                                --     vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-                            else
-                                fallback()
-                            end
-                        end, { "i", "s", }
-                    ),
-            },
-            sources = { table.unpack(default_sources) }
-        }
-
-            cmp.setup.filetype({ "coq", "rust" }, {
-                sources = {
-                    { name = "latex_symbols", option = { strategy = 0 } },
-                    table.unpack(default_sources)
-                }
-            })
-    end
-} }
+		opts_extend = { "sources.default" },
+	},
+}
