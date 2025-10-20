@@ -82,13 +82,12 @@ return {
         'stevearc/conform.nvim',
         opts = {
             formatters_by_ft = {
-                -- python = { "yapf" },
                 rust = { "rustfmt", lsp_format = "fallback" },
                 nix = { "alejandra" }
             }
         },
         init = function()
-            -- vim.o.formatexpr = "v:lua.require'conform'.formatexpr()";
+            vim.o.formatexpr = "v:lua.require'conform'.formatexpr()";
         end,
     },
 
