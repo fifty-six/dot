@@ -119,12 +119,11 @@ return {
             require("neoconf").setup {}
             require("neodev").setup {}
 
-            local lspconfig = require("lspconfig")
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             o = { on_attach = on_attach, capabilities = capabilities }
 
-            local sus = {
+            local servers = {
                 common = o,
                 servers = {
                     futhark_lsp = {},
@@ -154,7 +153,7 @@ return {
                             haskell = {
                                 plugin = {
                                     stan = {
-                                        --             -- I cannot stand 4000 strict data type warnings, and HLS doesn't respect the stan config files :/
+                                        -- I cannot stand 4000 strict data type warnings, and HLS doesn't respect the stan config files :/
                                         globalOn = false,
                                     },
                                 },
@@ -164,9 +163,9 @@ return {
                 },
             }
 
-            vim.lsp.config('*', sus.common)
+            vim.lsp.config('*', servers.common)
 
-            vim.iter(pairs(sus.servers)):each(function(name, cfg)
+            vim.iter(pairs(servers.servers)):each(function(name, cfg)
                 local ok, res = pcall(vim.lsp.config, name, cfg)
 
                 if not ok then
