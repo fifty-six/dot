@@ -166,10 +166,11 @@ return {
             vim.lsp.config('*', servers.common)
 
             vim.iter(pairs(servers.servers)):each(function(name, cfg)
+                ---@diagnostic disable-next-line: param-type-mismatch -- it's also a function
                 local ok, res = pcall(vim.lsp.config, name, cfg)
 
                 if not ok then
-                    vim.notify(("L + ratio, lsp server %s failed to configure\n\t%s"):format(name, result))
+                    vim.notify(("Failed to configure %s, %s"):format(name, res))
                 end
 
                 vim.lsp.enable(name)
