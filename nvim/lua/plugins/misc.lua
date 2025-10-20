@@ -29,7 +29,7 @@ return {
         "nvim-treesitter/nvim-treesitter-textobjects",
         after = "nvim-treesitter",
         requires = "nvim-treesitter/nvim-treesitter",
-        config = function() 
+        config = function()
             require 'nvim-treesitter.configs'.setup {
             textobjects = {
                 select = {
@@ -48,6 +48,8 @@ return {
                         ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
                         -- You can also use captures from other query groups like `locals.scm`
                         ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+                        ["ap"] = "@parameter.outer",
+                        ["ip"] = "@parameter.inner",
                     },
                     -- You can choose the select mode (default is charwise 'v')
                     --
