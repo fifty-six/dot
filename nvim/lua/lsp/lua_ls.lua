@@ -1,7 +1,4 @@
 return {
-    before_init = require("neodev.lsp").before_init,
-    on_attach = on_attach,
-    capabilities = capabilities,
     settings = {
         Lua = {
             runtime = {

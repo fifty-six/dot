@@ -91,13 +91,15 @@ return {
         end,
     },
 
+    -- lsp stuff for lua modules (specifically useful for nvim plugin completions)
+    { "folke/lazydev.nvim", opts = {} },
+
     {
         "neovim/nvim-lspconfig",
-        dependencies = { "folke/neoconf.nvim", "folke/neodev.nvim" },
+        dependencies = { "folke/neoconf.nvim" },
         -- event = { "InsertEnter", "CmdlineEnter" },
         config = function()
             require("neoconf").setup {}
-            require("neodev").setup {}
 
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 

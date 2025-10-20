@@ -119,7 +119,6 @@ return {
 
          end
      },
-     { "folke/neodev.nvim", opts = {} },
      {
          "akinsho/bufferline.nvim",
          config = function()
