@@ -169,7 +169,7 @@ return {
                         --     fallbackFlags = { '-std=c++17' },
                         -- },
                     },
-                    lua_ls = {},
+                    lua_ls = require("lsp.lua_ls"),
                     sourcekit = {
                         filetypes = { "swift", "objective-c", "objective-cpp" },
                         table.unpack(o)
