@@ -28,6 +28,7 @@
     pkgs.distant
     pkgs.python3
     pkgs.glow
+    pkgs.lua-language-server
   ];
 
   programs.kitty.settings.macos_option_as_alt = "both";
