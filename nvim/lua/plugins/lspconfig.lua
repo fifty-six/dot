@@ -101,10 +101,11 @@ return {
 
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            o = { on_attach = on_attach, capabilities = capabilities }
-
             local servers = {
-                common = o,
+                common = {
+                    on_attach = on_attach,
+                    capabilities = capabilities
+                },
                 servers = {
                     futhark_lsp = {},
                     zls = {},
@@ -126,7 +127,6 @@ return {
                     lua_ls = require("lsp.lua_ls"),
                     sourcekit = {
                         filetypes = { "swift", "objective-c", "objective-cpp" },
-                        table.unpack(o)
                     },
                     hls = {
                         settings = {
