@@ -4,68 +4,43 @@ local on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', { buf = bufnr })
 
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    function toggle_inlay_hint()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+    end
+
+    function list_workspace_folders()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end
 
     nest.applyKeymaps {
         buffer = bufnr,
         { 'g', {
-            { 'D', vim.lsp.buf.declaration, options = { desc = "declaration" }},
-            { 'd', vim.lsp.buf.definition, desc = "definition" },
-            { 'i', vim.lsp.buf.implementation, desc = "implementation" },
-            { 'r', vim.lsp.buf.references, desc = "Show references." },
+            { 'D', vim.lsp.buf.declaration, options = { desc = "Go to declaration" }},
+            { 'd', vim.lsp.buf.definition, options = { desc = "Go to definition" } },
+            { 'i', vim.lsp.buf.implementation, options = { desc = "Go to implementation" } },
+            { 'r', vim.lsp.buf.references, options = { desc = "Show references." } },
         }},
+
         { '<leader>', {
+            -- Workspaces
+            { 'w', {
+                { 'a', vim.lsp.buf.add_workspace_folder, options = { desc = "add_workspace_folder" }},
+                { 'r', vim.lsp.buf.remove_workspace_folder, options = { desc = "remove_workspace_folder" }},
+                { 'l', list_workspace_folders, options = { desc = "List workspace folders" }},
+            }},
 
-            { 'wa', vim.lsp.buf.add_workspace_folder, desc = "add_workspace_folder" },
-            { 'wr', vim.lsp.buf.remove_workspace_folder, desc = "remove_workspace_folder" },
-            { 'D',  vim.lsp.buf.type_definition, desc = "type_definition" },
-            { 'rn', vim.lsp.buf.rename, desc = "rename" },
-            { 'ce', vim.lsp.buf.hover, desc = "LSP hover action." },
+            { 'D',  vim.lsp.buf.type_definition, options = { desc = "type_definition" }},
+            { 'rn', vim.lsp.buf.rename, options = { desc = "Rename" }},
+            { 'ih', toggle_inlay_hint, options = { desc = "Toggle inlay hint" }},
+            { '<space>f', function() vim.lsp.buf.format { async = true } end, { desc = "Format buffer" }},
+
+            { mode = 'nv', 'ca', vim.lsp.buf.code_action, options = { desc = "Code action" }},
         }},
-        { 'K', vim.lsp.buf.hover, desc = "hover" },
-        { '<C-k>', vim.lsp.buf.signature_help, desc = "signature_help" }
+
+        { 'K', vim.lsp.buf.hover, options = { desc = "hover" } },
+
+        { '<C-k>', vim.lsp.buf.signature_help, options = { desc = "signature_help" } },
     }
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    do
-        ---@format disable
-
-    end
-
-    vim.keymap.set(
-        'n',
-        '<leader>ih',
-        function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-        end
-    )
-
-
-    vim.keymap.set(
-        { 'n', 'v' },
-        '<leader>ca',
-        vim.lsp.buf.code_action,
-        { desc = "code_action", table.unpack(bufopts) }
-    )
-
-    vim.keymap.set(
-        'n',
-        '<space>f',
-        function()
-            vim.lsp.buf.format { async = true }
-        end,
-        { desc = "Format", table.unpack(bufopts) }
-    )
-
-    vim.keymap.set(
-        'n',
-        '<space>wl',
-        function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end,
-        { desc = "List workspace folders", table.unpack(bufopts) }
-    )
 end
 
 return {
