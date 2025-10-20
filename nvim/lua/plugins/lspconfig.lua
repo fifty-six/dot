@@ -44,34 +44,15 @@ local on_attach = function(_, bufnr)
 end
 
 return {
-    -- {
-    --     'Julian/lean.nvim',
-    --     event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
-
-    --     dependencies = {
-    --         'neovim/nvim-lspconfig',
-    --         'nvim-lua/plenary.nvim',
-    --     },
-
-    --     opts = {
-    --         lsp = {
-    --             on_attach = on_attach,
-    --         },
-    --         mappings = true,
-    --     }
-    -- },
-
     {
         'mrcjkb/rustaceanvim',
-        version = '^4', -- Recommended
-        lazy = false,   -- This plugin is already lazy
+        version = '^4',
         config = function()
             vim.g.rustaceanvim = {
                 server = {
                     on_attach = function(idk, bufnr)
                         local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
-                        -- Call the LSP on_attach
                         on_attach(idk, bufnr)
 
                         -- override the hover action to be rustacean's
@@ -83,7 +64,7 @@ return {
         end
     },
 
-    { 
+    {
         "nvimtools/none-ls.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
@@ -175,82 +156,6 @@ return {
 
                 vim.lsp.enable(name)
             end)
-
-
-            -- for _, v in pairs(lsps) do
-            --     if type(v) == "string" then
-            --         lspconfig[v].setup(o)
-            --     else
-            --         -- Add our default opts, then remove the main value string
-            --         opts = { table.unpack(o), table.unpack(v) }
-            --         opts[v[1]] = nil
-            --
-            --         lspconfig[v[1]].setup(opts)
-            --     end
-            -- end
-            --
-            -- lspconfig.sourcekit.setup({
-            --     filetypes = { "swift", "objective-c", "objective-cpp" },
-            --     table.unpack(o)
-            -- })
-            --
-            -- lspconfig.lua_ls.setup {
-            --     before_init = require("neodev.lsp").before_init,
-            --     on_attach = on_attach,
-            --     capabilities = capabilities,
-            --     settings = {
-            --         Lua = {
-            --             runtime = {
-            --                 -- Tell the language server which version of Lua you're using
-            --                 -- (most likely LuaJIT in the case of Neovim)
-            --                 version = 'LuaJIT',
-            --             },
-            --             diagnostics = {
-            --                 -- Get the language server to recognize the `vim` global
-            --                 globals = {
-            --                     'vim',
-            --                     'require'
-            --                 },
-            --             },
-            --             workspace = {
-            --                 -- Make the server aware of Neovim runtime files
-            --                 library = vim.api.nvim_get_runtime_file("", true),
-            --             },
-            --             -- Do not send telemetry data containing a randomized but unique identifier
-            --             telemetry = {
-            --                 enable = false,
-            --             },
-            --         },
-            --     },
-            -- }
-            --
-            -- -- I really gotta figure out a less shit way for clangd to not explode on embedded stuff
-            -- -- lspconfig.clangd.setup {
-            -- --     on_attach = on_attach,
-            -- --     capabilities = capabilities,
-            -- --     cmd = {
-            -- --         "clangd",
-            -- --         -- '--query-driver=/home/home/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-g++',
-            -- --         -- '--query-driver=/usr/bin/avr-gcc'
-            -- --     },
-            --
-            -- -- }
-            --
-            -- lspconfig.hls.setup {
-            --     on_attach = on_attach,
-            --     capabilities = capabilities,
-            --     settings = {
-            --         haskell = {
-            --             plugin = {
-            --                 stan = {
-            --     --             -- I cannot stand 4000 strict data type warnings, and HLS doesn't respect the stan config files :/
-            --                     globalOn = false,
-            --                 },
-            --             },
-            --         },
-            --     },
-            -- }
-
 
             local opts = { noremap = true, silent = true }
 
