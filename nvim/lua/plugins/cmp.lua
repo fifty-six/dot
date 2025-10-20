@@ -46,7 +46,7 @@ return {
 					-- completions while we wait is really nice.
 					lsp = {
 						timeout_ms = 200,
-						fallback = {},
+						fallbacks = {},
 						score_offset = 100,
 					},
 				},
