@@ -3,12 +3,19 @@ name = "Yusuf Bham"
 email = "git@fiftysix.dev"
 
 [aliases]
-# tug - move the nearest bookmark to the nearest non-empty change at or before @
-tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_nonempty(@)"]
+# tug - move the nearest bookmark to the nearest pushable (non-empty + has desc) change at or before @
+# See: https://github.com/jj-vcs/jj/discussions/5568
+tug = ["util", "exec", "--", "sh", "-c", """
+if [ "x$1" = "x" ]; then
+  jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
+else
+  jj bookmark move --to "closest_pushable(@)" "$@"
+fi
+""", ""]
 
 [revset-aliases]
 'closest_bookmark(to)' = 'heads(::to & bookmarks())'
-'closest_nonempty(to)' = 'heads(::to ~ empty())'
+'closest_pushable(to)' = 'heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'
 
 [git]
 private-commits = "description(glob:'private:*') | description(glob:'__*')"
