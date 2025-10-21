@@ -27,6 +27,8 @@
     pkgs.evil-helix
     pkgs.mosh
     pkgs.glow
+    pkgs.autoconf
+    pkgs.automake
   ];
 
   programs.atuin.settings.daemon.enabled = true;
