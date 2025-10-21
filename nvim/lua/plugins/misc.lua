@@ -792,6 +792,13 @@ return {
 
     { "jinh0/eyeliner.nvim" },
 
+    {
+        "rafikdraoui/jj-diffconflicts",
+        init = function()
+            vim.g.jj_diffconflicts_show_usage_message = false
+        end
+    },
+
     --    {
     --        "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
     --        dependencies = { { "nvim-treesitter" } },
