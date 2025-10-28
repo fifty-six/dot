@@ -24,25 +24,25 @@
     homeConfigurations."home@framework" = home-manager.lib.homeManagerConfiguration {
       pkgs = linux;
 
-      modules = [./framework/home.nix];
+      modules = [./nix/framework/home.nix];
     };
 
     homeConfigurations."toor@flux" = home-manager.lib.homeManagerConfiguration {
       pkgs = linux;
 
-      modules = [./flux/toor.nix];
+      modules = [./nix/flux/toor.nix];
     };
 
     homeConfigurations."home@vessel" = home-manager.lib.homeManagerConfiguration {
       pkgs = linux;
 
-      modules = [./vessel/home.nix];
+      modules = [./nix/vessel/home.nix];
     };
 
     homeConfigurations."yusuf.bham@zetier.com" = home-manager.lib.homeManagerConfiguration {
       pkgs = linux;
 
-      modules = [./work/work.nix];
+      modules = [./nix/work/work.nix];
     };
 
     darwinConfigurations."ponos" = nix-darwin.lib.darwinSystem {
@@ -51,13 +51,13 @@
         inherit self;
       };
       modules = [
-        ./ponos/darwin.nix
+        ./nix/ponos/darwin.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.verbose = true;
-          home-manager.users.home = ./ponos/home.nix;
+          home-manager.users.home = ./nix/ponos/home.nix;
         }
       ];
     };
