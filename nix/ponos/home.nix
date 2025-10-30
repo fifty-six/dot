@@ -30,6 +30,8 @@
     pkgs.python3
     pkgs.glow
     pkgs.lua-language-server
+    pkgs.mosh
+    pkgs.imagemagick
   ];
 
   programs.kitty.settings.macos_option_as_alt = "both";
@@ -38,7 +40,7 @@
     enable = true;
 
     shellAliases = {
-      switch = "sudo darwin-rebuild switch --flake ~/dot/home-manager -v |& nom";
+      switch = "sudo darwin-rebuild switch --flake ~/dot -v |& nom";
     };
   };
 

@@ -13,6 +13,9 @@
 
   system.defaults.WindowManager.StandardHideDesktopIcons = true;
 
+  # Key-repeat instead of accents
+  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Declare the user that will be running `nix-darwin`.
@@ -66,6 +69,10 @@
       "syncthing-app"
       "submariner"
       "nikitabobko/tap/aerospace"
+      "orcaslicer@nightly"
+      "shadowsocksx-ng"
+      "gimp"
+      "krita"
     ];
     masApps = {
       "Wireguard" = 1451685025;
