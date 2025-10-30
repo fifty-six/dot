@@ -807,4 +807,28 @@ return {
     --    },
     --  -- Speed up deferred plugins
     --  { "lewis6991/impatient.nvim" }
+
+    --luacheck: globals Difft
+    {
+      "ahkohd/difft.nvim",
+      keys = {
+        {
+          "<leader>d",
+          function()
+            if Difft.is_visible() then
+              Difft.hide()
+            else
+              Difft.diff()
+            end
+          end,
+          desc = "Toggle Difft",
+        },
+      },
+      config = function()
+        require("difft").setup({
+          command = "jj diff --no-pager", -- :speaking_head:
+          layout = "float",  -- nil (buffer), "float", or "ivy_taller"
+        })
+      end,
+    }
 }
