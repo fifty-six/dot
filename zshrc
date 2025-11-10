@@ -187,3 +187,5 @@ bindkey "^I" complete-word
 if [ -f ~/.zshrc.local ]; then
     . ~/.zshrc.local
 fi
+
+export MANPAGER='nvim +Man!'
