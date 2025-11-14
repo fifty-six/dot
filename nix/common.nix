@@ -11,6 +11,8 @@ let
   mklink = config.lib.file.mkOutOfStoreSymlink;
 in
 {
+  imports = [ ./firefox.nix ];
+
   home.stateVersion = "25.11";
 
   home.packages = [
