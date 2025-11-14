@@ -45,12 +45,10 @@ in
   systemd.user.services.ntfy = {
     Unit = {
       Description = "ntfy";
-
       After = [ "graphical-session.target" ];
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
-
     };
     Service = {
       ExecStart = "${pkgs.ntfy-sh}/bin/ntfy subscribe --from-config";
@@ -74,7 +72,6 @@ in
   systemd.user.services.kdeconnectd = {
     Unit = {
       Description = "KDE Connect";
-
       After = [ "graphical-session.target" ];
     };
     Install = {
