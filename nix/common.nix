@@ -17,13 +17,13 @@ in
 
   home.packages = [
     pkgs.bat
-
     pkgs.ntfy-sh
     pkgs.jujutsu
     pkgs.jjui
     pkgs.comma
     pkgs.basedpyright
     pkgs.eza
+    pkgs.treefmt
 
     pkgs.nixfmt
     pkgs.alejandra
