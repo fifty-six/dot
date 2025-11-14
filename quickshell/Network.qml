@@ -6,6 +6,7 @@ import Quickshell.Io;
 import Qt5Compat.GraphicalEffects;
 
 Module {
+    id: root
     color: text.color
 
     RowLayout {
