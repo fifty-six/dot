@@ -5,11 +5,15 @@ import Quickshell;
 import "Services";
 import "Services/NiriService.qml";
 
-Text { 
+Text {
     Layout.alignment: Qt.AlignHCenter;
+    Layout.maximumWidth: 350;
 
     color: "white";
-    text: NiriService.title 
+    text: NiriService.title
     font.family: "Fira Mono"
     font.pointSize: 10.5;
+
+    elide: Text.ElideRight
+    clip: true
 }
