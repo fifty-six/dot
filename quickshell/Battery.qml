@@ -38,17 +38,14 @@ Module {
             font.pointSize: 10;
             font.family: "Fira Mono";
         }
+
         IconImage {
             source: {
                 let percent = Math.round(UPower.displayDevice.percentage * 10) * 10;
 
-                console.debug(`${UPower.displayDevice.percentage} -> ${percent}`);
-
                 let powered = UPower.onBattery ? "" : "-charging";
 
-                let res = `image://icon/battery-level-${percent}${powered}-symbolic`;
-                console.debug(res);
-                return res;
+                return `image://icon/battery-level-${percent}${powered}-symbolic`;
             }
 
             visible: true
