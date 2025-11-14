@@ -18,12 +18,9 @@ Item {
         RowLayout {
             id: rows
 
-            Layout.alignment: Qt.AlignHCenter
             spacing: 5
 
             Text {
-                Layout.alignment: Qt.AlignLeft
-
                 id: text
 
                 color: {
@@ -40,8 +37,6 @@ Item {
             }
 
             IconImage {
-                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-
                 source: Quickshell.iconPath("audio-volume-high-symbolic")
                 implicitSize: 12
 
