@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   parfait = pkgs.fetchzip {
     url = "https://github.com/reizumii/parfait/archive/refs/tags/v0.8.zip";
@@ -69,5 +69,31 @@ in
   home.file.parfait = {
     source = parfait;
     target = ".mozilla/firefox/default/chrome/parfait";
+  };
+
+  #
+  # Firefox is unhappy if profiles.ini is readonly,
+  # and it doesn't have the values it wants, which
+  # is the case if you use distro-native firefox with
+  # a hm-managed profile - which is what I use due to
+  # it having hw accel where the hm version doesn't seem to.
+  #
+  # So, replace profiles.ini with a r/w copy of it on activation.
+  #
+  home.activation = lib.mkIf config.graphical.enable {
+    firefoxProfiles = let
+      path = "${config.home.homeDirectory}/.mozilla/firefox/profiles.ini";
+    in
+      lib.hm.dag.entryAfter
+      [
+        "writeBoundary"
+        "linkGeneration"
+      ]
+      ''
+        run mv ${path} ${path}.hm
+        run cp "`readlink ${path}.hm`" ${path}
+        run rm -f ${path}.$HOME_MANAGER_BACKUP_EXT
+        run chmod u+w ${path}
+      '';
   };
 }
