@@ -19,13 +19,10 @@ ColumnLayout {
 
         color: "transparent";
 
-        implicitHeight: {
-            return rect.children.reduce((a, b) => a + b.implicitHeight, 0);
-        }
+        implicitHeight: rect.children.reduce((a, b) => a + b.implicitHeight, 0)
 
-        implicitWidth: {
-            return Math.max(...rect.children.map(x => x.implicitWidth));
-        }
+        implicitWidth: Math.max(...rect.children.map(x => x.implicitWidth))
+
     }
 
     Rectangle {

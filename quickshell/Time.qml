@@ -22,15 +22,12 @@ Module {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
             }
+
             id: text
 
-            color: {
-                    return "#a3be8c";
-            }
+            color: "#a3be8c"
 
-            text: {
-                return new Date().toTimeString().split()[0];
-            }
+            text: new Date().toTimeString().split()[0]
 
             font.pointSize: 10;
             font.family: "Fira Mono";

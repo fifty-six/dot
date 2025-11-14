@@ -23,13 +23,9 @@ Item {
             Text {
                 id: text
 
-                color: {
-                    return Pipewire.defaultAudioSink?.audio.muted ? "#3b4252" : "#b48ead";
-                }
+                color: Pipewire.defaultAudioSink?.audio.muted ? "#3b4252" : "#b48ead"
 
-                text: {
-                    return `${Math.round(Pipewire.defaultAudioSink?.audio.volume * 100 ?? 0)}%`;
-                }
+                text: `${Math.round(Pipewire.defaultAudioSink?.audio.volume * 100 ?? 0)}%`
 
                 font.pointSize: 10;
                 font.family: "Fira Mono";
