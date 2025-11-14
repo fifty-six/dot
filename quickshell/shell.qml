@@ -13,7 +13,8 @@ Scope {
         PanelWindow {
             property var modelData
             screen: modelData
-            implicitHeight: 34
+            implicitHeight: 37
+            id: toplevel
 
             anchors {
                 top: true
@@ -26,10 +27,7 @@ Scope {
             // This one is the actual bar
             Rectangle {
                 id: bar
-                anchors.leftMargin: 5
-                anchors.rightMargin: 5
                 anchors.fill: parent
-                radius: 12
                 color: Qt.rgba(0.01, 0.01, 0.01, 0.7);
 
                 RowLayout {
@@ -75,34 +73,28 @@ Scope {
 
                     layoutDirection: Qt.RightToLeft;
 
-                    spacing: 20;
+                    spacing: 15;
 
                     Time { }
 
-                    Battery {
-                        implicitHeight: parent.height;
-                        implicitWidth: 20;
-                    }
+                    Battery { }
 
                     // SysTray {}
-                    
+
                     Network { }
 
                     Volume { }
 
-                    Brightness {
-                        implicitWidth: 35
-                    }
+                    Brightness { }
 
                     Light {
-                        // implicitWidth: 160;
                         implicitHeight: parent.height;
                         Layout.alignment: Qt.AlignVCenter
                         Layout.fillHeight: true;
                     }
 
 
-                } 
+                }
             }
         }
     }
