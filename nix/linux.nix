@@ -28,6 +28,20 @@ in
     style = mklink ../swaync.css;
   };
 
+  systemd.user.services.quickshell = {
+    Unit = {
+      Description = "Quickshell";
+      After = [ "graphical-session.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "/usr/bin/qs";
+      Environment = "QT_QPA_PLATFORMTHEME=gtk3";
+    };
+  };
+
   systemd.user.services.ntfy = {
     Unit = {
       Description = "ntfy";
