@@ -1,16 +1,22 @@
-#!/usr/bin/env python3
-# Install dependencies: pip install httpx pydantic rich
-
-"""
-Home Assistant Light Control Script
-Refactored with Pydantic models for type safety and validation.
-"""
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# requires-python = ">=3.12"
+#
+# dependencies = [
+#   "httpx",
+#   "pydantic",
+#   "rich",
+# ]
+# ///
 
 from ha_secrets import HA_TOKEN
+
 import argparse
 import sys
 import typing
 import httpx
+
 from functools import partial
 from typing import Optional, Dict, Any, Union
 from pydantic import field_validator, BaseModel
@@ -21,13 +27,15 @@ from rich import print as rprint
 
 HA_URL = "https://ha.in.fiftysix.dev"
 
+
 class LightAttributes(BaseModel):
     """Model for light entity attributes"""
+
     brightness: Optional[int] = None
     friendly_name: Optional[str] = None
     supported_color_modes: Optional[list[str]] = None
     color_mode: Optional[str] = None
-    
+
     @property
     def brightness_percent(self) -> Optional[int]:
         """Convert brightness to percentage (0-100)"""
@@ -35,85 +43,100 @@ class LightAttributes(BaseModel):
             return int(self.brightness * 100 / 255)
         return None
 
+
 class HAEntityState(BaseModel):
     """Model for Home Assistant entity state response"""
+
     entity_id: str
     state: str
     attributes: LightAttributes
     last_changed: str
     last_updated: str
     context: Dict[str, Any] = {}
-    
-    @field_validator('state')
+
+    @field_validator("state")
     @classmethod
     def validate_state(cls, v):
         """Validate state values"""
-        valid_states = {'on', 'off', 'unavailable', 'unknown'}
+        valid_states = {"on", "off", "unavailable", "unknown"}
         if v not in valid_states:
-            rprint(f"[yellow]Warning: Unknown state '{v}', expected one of {valid_states}[/yellow]")
+            rprint(
+                f"[yellow]Warning: Unknown state '{v}', expected one of {valid_states}[/yellow]"
+            )
         return v
-    
+
     @property
     def is_on(self) -> bool:
         """Check if light is on"""
-        return self.state == 'on'
-    
+        return self.state == "on"
+
     @property
     def is_available(self) -> bool:
         """Check if light is available"""
-        return self.state != 'unavailable'
+        return self.state != "unavailable"
+
 
 class HALightController:
     def __init__(self, url: str, token: str):
         self.url = url
         self.headers = {
             "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         }
         self.console = Console()
-    
-    def _request(self, method: str, endpoint: str, data: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
+
+    def _request(
+        self, method: str, endpoint: str, data: Optional[Dict[str, Any]] = None
+    ) -> Optional[Dict[str, Any]]:
         """Make HTTP request to Home Assistant API"""
         url = f"{self.url}{endpoint}"
-        
+
         try:
             with httpx.Client() as client:
-                return client.request(method, url, headers=self.headers, json=data).raise_for_status().json()
+                return (
+                    client.request(method, url, headers=self.headers, json=data)
+                    .raise_for_status()
+                    .json()
+                )
         except httpx.HTTPStatusError as e:
             rprint(f"[red]HTTP error {e.response.status_code}:[/red] {e.response.text}")
             raise
         except httpx.RequestError as e:
             rprint(f"[red]Request error:[/red] {e}")
             raise
-    
-    def _service_call(self, service: str, entity_id: str, extra_data: Optional[Dict[str, Any]] = None) -> bool:
+
+    def _service_call(
+        self, service: str, entity_id: str, extra_data: Optional[Dict[str, Any]] = None
+    ) -> bool:
         """Generic service call"""
         data = {"entity_id": entity_id}
         if extra_data:
             data.update(extra_data)
-        
+
         try:
             _ = self._request("POST", f"/api/services/light/{service}", data)
         except (httpx.HTTPStatusError, httpx.RequestError):
-            rprint(f"[red]Failed to {service.replace('_', ' ')} light. Check your token and entity ID.[/red]")
+            rprint(
+                f"[red]Failed to {service.replace('_', ' ')} light. Check your token and entity ID.[/red]"
+            )
             return False
-        
+
         return True
-    
+
     def set_brightness(self, entity_id: str, brightness: int) -> bool:
         if not 0 <= brightness <= 100:
             rprint("[red]Error: Brightness must be between 0 and 100[/red]")
             return False
-        
+
         ha_brightness = int(brightness * 255 / 100)
         return self._service_call("turn_on", entity_id, {"brightness": ha_brightness})
-    
+
     def turn_on(self, entity_id: str) -> bool:
         return self._service_call("turn_on", entity_id)
-    
+
     def turn_off(self, entity_id: str) -> bool:
         return self._service_call("turn_off", entity_id)
-    
+
     def toggle(self, entity_id: str) -> bool:
         return self._service_call("toggle", entity_id)
 
@@ -126,56 +149,74 @@ class HALightController:
         else:
             rprint("[red]Failed to get state. Check your token and entity ID.[/red]")
             return False
-    
+
     def get_state(self, entity_id: str) -> bool:
         """Get light state and attributes with Rich formatted output"""
-        
+
         result = self._request("GET", f"/api/states/{entity_id}")
         if result:
             try:
-                # Parse and validate the response using Pydantic
                 entity_state = HAEntityState.model_validate(result)
-                
-                # Create a Rich table for formatted output
-                table = Table(title=f"Light State: {entity_id}", show_header=True, header_style="bold magenta")
+
+                table = Table(
+                    title=f"Light State: {entity_id}",
+                    show_header=True,
+                    header_style="bold magenta",
+                )
                 table.add_column("Property", style="cyan", width=20)
                 table.add_column("Value", style="white")
-                
-                # Add basic state information
+
                 table.add_row("Entity ID", entity_state.entity_id)
-                
-                # Color-code the state
-                state_color = "green" if entity_state.is_on else "red" if entity_state.state == "off" else "yellow"
-                table.add_row("State", f"[{state_color}]{entity_state.state}[/{state_color}]")
-                
+
+                state_color = (
+                    "green"
+                    if entity_state.is_on
+                    else "red" if entity_state.state == "off" else "yellow"
+                )
+                table.add_row(
+                    "State", f"[{state_color}]{entity_state.state}[/{state_color}]"
+                )
+
                 availability_color = "green" if entity_state.is_available else "red"
-                table.add_row("Available", f"[{availability_color}]{'Yes' if entity_state.is_available else 'No'}[/{availability_color}]")
-                
-                # Add attributes if available
+                table.add_row(
+                    "Available",
+                    f"[{availability_color}]{'Yes' if entity_state.is_available else 'No'}[/{availability_color}]",
+                )
+
                 if entity_state.attributes.friendly_name:
-                    table.add_row("Friendly Name", entity_state.attributes.friendly_name)
-                
+                    table.add_row(
+                        "Friendly Name", entity_state.attributes.friendly_name
+                    )
+
                 if entity_state.attributes.brightness is not None:
-                    brightness_percent = typing.cast(int, entity_state.attributes.brightness_percent)
-                    brightness_bar = "█" * (brightness_percent // 5) + "░" * (20 - brightness_percent // 5)
-                    table.add_row("Brightness", f"{brightness_percent}% ({entity_state.attributes.brightness}/255)")
-                    table.add_row("Brightness Bar", f"[yellow]{brightness_bar}[/yellow]")
-                
+                    brightness_percent = typing.cast(
+                        int, entity_state.attributes.brightness_percent
+                    )
+                    brightness_bar = "█" * (brightness_percent // 5) + "░" * (
+                        20 - brightness_percent // 5
+                    )
+                    table.add_row(
+                        "Brightness",
+                        f"{brightness_percent}% ({entity_state.attributes.brightness}/255)",
+                    )
+                    table.add_row(
+                        "Brightness Bar", f"[yellow]{brightness_bar}[/yellow]"
+                    )
+
                 if entity_state.attributes.color_mode:
                     table.add_row("Color Mode", entity_state.attributes.color_mode)
-                
+
                 if entity_state.attributes.supported_color_modes:
                     modes = ", ".join(entity_state.attributes.supported_color_modes)
                     table.add_row("Supported Modes", modes)
-                
+
                 table.add_row("Last Changed", entity_state.last_changed)
                 table.add_row("Last Updated", entity_state.last_updated)
-                
-                # Display the table
+
                 self.console.print(table)
-                
+
                 return True
-                
+
             except ValueError as e:
                 rprint(f"[red]Error parsing state response:[/red] {e}")
                 rprint(f"[dim]Raw response: {result}[/dim]")
@@ -183,8 +224,8 @@ class HALightController:
         else:
             rprint("[red]Failed to get state. Check your token and entity ID.[/red]")
             return False
-    
-    def get_state_object(self, entity_id: str) -> Optional[HAEntityState]:
+
+    def get_state_object(self, entity_id: str) -> HAEntityState | None:
         """Get light state as a Pydantic object for programmatic use"""
         result = self._request("GET", f"/api/states/{entity_id}")
         if result:
@@ -195,28 +236,35 @@ class HALightController:
                 return None
         return None
 
+
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Home Assistant Light Control")
     subparsers = parser.add_subparsers(dest="action", help="Available actions")
-    
-    def add_entity_arg(subparser):
-        subparser.add_argument("entity_id", help="Entity ID (e.g., light.double_switch)")
-    
+
+    def add_entity_arg(subparser: argparse.ArgumentParser):
+        _ = subparser.add_argument(
+            "entity_id", help="Entity ID (e.g., light.double_switch)"
+        )
+
+    # special casing this because i'm lazy
     set_parser = subparsers.add_parser("set", help="Set light brightness")
     add_entity_arg(set_parser)
-    set_parser.add_argument("brightness", type=int, help="Brightness percentage (0-100)")
-    
+    _ = set_parser.add_argument(
+        "brightness", type=int, help="Brightness percentage (0-100)"
+    )
+
     for cmd, help_text in [
         ("on", "Turn light on"),
-        ("off", "Turn light off"), 
+        ("off", "Turn light off"),
         ("toggle", "Toggle light state"),
         ("get", "Get light state"),
-        ("brightness-raw", "Brightness (int)")
+        ("brightness-raw", "Brightness (int)"),
     ]:
         cmd_parser = subparsers.add_parser(cmd, help=help_text)
         add_entity_arg(cmd_parser)
-    
+
     return parser
+
 
 def main():
     parser = create_parser()
@@ -225,22 +273,27 @@ def main():
     if not args.action:
         parser.print_help()
         sys.exit(1)
-    
-    # Initialize controller
+
     controller = HALightController(HA_URL, HA_TOKEN)
-    
-    # Route to appropriate method using a dispatch table with partial functions
+
     actions = {
-        "set": partial(controller.set_brightness, args.entity_id, vars(args).get('brightness', None)),
-        "on": partial(controller.turn_on, args.entity_id),
-        "off": partial(controller.turn_off, args.entity_id),
-        "toggle": partial(controller.toggle, args.entity_id),
-        "get": partial(controller.get_state, args.entity_id),
-        "brightness-raw": partial(controller.brightness_raw, args.entity_id)
+        "set": partial(
+            controller.set_brightness,
+            brightness=vars(args).get("brightness", None),
+        ),
+        "on": controller.turn_on,
+        "off": controller.turn_off,
+        "toggle": controller.toggle,
+        "get": controller.get_state,
+        "brightness-raw": controller.brightness_raw,
     }
-    
-    success = actions[args.action]()
-    sys.exit(0 if success else 1)
+
+    sys.exit(
+        not actions[typing.cast(str, args.action)](typing.cast(str, args.entity_id))
+    )
+
 
 if __name__ == "__main__":
     main()
+
+# vim: ft=python
