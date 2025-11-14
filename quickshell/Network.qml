@@ -1,21 +1,40 @@
+import Quickshell;
+import Quickshell.Widgets;
 import QtQuick;
 import QtQuick.Layouts;
 import Quickshell.Io;
+import Qt5Compat.GraphicalEffects;
 
 Module {
-    id: root;
-
     color: text.color
 
-    Text {
+    RowLayout {
         Layout.alignment: Qt.AlignCenter
-        id: text
 
-        color: "white";
-        text: "Unknown";
+        Text {
+            Layout.alignment: Qt.AlignCenter
+            id: text
 
-        font.pointSize: 10;
-        font.family: "Fira Mono";
+            color: "white";
+            text: "Unknown";
+
+            font.pointSize: 10;
+            font.family: "Fira Mono";
+        }
+
+        Image {
+            // WARNING: using the same id as another image seems to make it overlay and break.
+            // also: visible needs to be false or it uses the non-existent icon in the width
+            id: net_icon
+            visible: false
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+
+            Layout.preferredHeight: 12
+            Layout.preferredWidth: 12
+
+            layer.enabled: true
+            layer.effect: ColorOverlay { color: "#a3be8c" }
+        }
     }
 
     Process {
@@ -63,14 +82,20 @@ Module {
 
                 if (!connected) {
                     text.text = "disconnected";
+                    net_icon.visible = false;
                     return;
                 }
 
+                net_icon.visible = true;
+
                 if (main.type === "wifi") {
-                    text.text = main.connection;
+                    text.text = `${main.connection}`;
+                    net_icon.source = "image://icon/network-wireless-symbolic";
+
                 } else {
                     // Wired connection 1 just doesn't sound as cool
                     text.text = main.device;
+                    net_icon.source = "image://icon/network-wired-symbolic";
                 }
             }
         }
