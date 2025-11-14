@@ -13,4 +13,6 @@
 
   home.username = "home";
   home.homeDirectory = "/home/home";
+
+  graphical.enable = true;
 }

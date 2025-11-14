@@ -13,6 +13,9 @@ in
     ../linux.nix
   ];
 
+  graphical.enable = true;
+  bar.enable = true;
+
   home.username = "home";
   home.homeDirectory = "/home/home";
 
