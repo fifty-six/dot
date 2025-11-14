@@ -1,6 +1,8 @@
 const workspaceChanged = (ev, ns) => {
     let { workspaces } = ev;
+    ns.workspaces = new Map();
     for (let [idx, ws] of workspaces.entries()) {
+        ns.workspaces.set(ws.id, ws);
         if (ws.is_focused) {
             ns.active_idx = idx + 1;
         }
@@ -20,12 +22,11 @@ function windows_changed(wc, ns) {
 }
 export const handleEvent = (evRaw, ns) => {
     let ev = JSON.parse(evRaw);
-    // console.debug(`dbg: ${JSON.stringify(ns.windows)}`);
     if ('WorkspacesChanged' in ev) {
         workspaceChanged(ev.WorkspacesChanged, ns);
     }
     else if ('WorkspaceActivated' in ev) {
-        ns.active_idx = ev.WorkspaceActivated.id - 1;
+        ns.active_idx = ns.workspaces.get(ev.WorkspaceActivated.id).idx - 1;
     }
     else if ('WindowOpenedOrChanged' in ev) {
         let { window } = ev.WindowOpenedOrChanged;

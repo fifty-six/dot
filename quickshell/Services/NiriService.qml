@@ -14,6 +14,7 @@ Singleton {
     property string title;
 
     property var windows;
+    property var workspaces;
 
     Process {
         id: niriEventStream
