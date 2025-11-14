@@ -46,6 +46,14 @@ Item {
                 border.width: 1;
                 color: "transparent";
 
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: _ => {
+                        Quickshell.execDetached(["niri", "msg", "action", "focus-workspace", (parent.index + 1).toString()])
+                    }
+                }
+
                 states: State {
                     name: "active"
                     when: NiriService.active_idx == ws.index
