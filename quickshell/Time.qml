@@ -6,7 +6,7 @@ Module {
     id: root
     color: text.color
 
-    Item { 
+    Item {
         id: rect
 
         Layout.alignment: Qt.AlignHCenter
@@ -36,6 +36,7 @@ Module {
             font.family: "Fira Mono";
 
             Timer {
+                id: timer
                 interval: 200
                 running: true
                 repeat: true
@@ -54,6 +55,7 @@ Module {
             anchors.fill: parent
             onClicked: {
                 rect.is_date = !rect.is_date
+                timer.triggered()
             }
         }
     }
