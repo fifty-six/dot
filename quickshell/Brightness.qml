@@ -3,7 +3,7 @@ import QtQuick.Layouts;
 import Quickshell;
 import Quickshell.Io;
 
-Item { 
+Item {
     id: root;
 
     Layout.alignment: Qt.AlignBottom
@@ -45,7 +45,7 @@ Item {
 
         color: text.color
 
-        RowLayout { 
+        RowLayout {
             id: rows
 
             Layout.alignment: Qt.AlignCenter
@@ -61,7 +61,7 @@ Item {
                 font.family: "Fira Mono";
             }
 
-            Item { 
+            Item {
                 implicitWidth: 12
                 implicitHeight: 12
 
@@ -69,13 +69,22 @@ Item {
                     id: canvas
                     anchors.fill: parent
                     antialiasing: true
+
+                    renderTarget: Canvas.FramebufferObject
+                    renderStrategy: Canvas.Cooperative
+
+                    width: parent.width * 40
+                    height: parent.height * 40
+                    smooth: true;
+                    transformOrigin: Item.TopLeft
+
                     onPaint: {
                         var ctx = getContext("2d");
 
-                        var x = parent.width / 2;
-                        var y = parent.height / 2;
+                        var x = width / 2;
+                        var y = height / 2;
 
-                        var radius = parent.implicitHeight / 2
+                        var radius = (width / 2) - 1;
                         var startAngle = (Math.PI / 180) * 270;
                         var fullAngle = (Math.PI / 180) * (270 + 360);
                         var progressAngle = (Math.PI / 180) * (270 + 100);
@@ -85,11 +94,8 @@ Item {
                         ctx.strokeStyle = root.color;
                         ctx.lineWidth = 1;
                         ctx.beginPath();
-                        ctx.moveTo(x,y);
                         ctx.arc(x, y, radius, 0, Math.PI * 2);
-                        ctx.lineTo(x, y);
                         ctx.stroke();
-                        // ctx.fill();
 
                         ctx.fillStyle = root.color;
                         ctx.beginPath();
