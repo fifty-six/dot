@@ -17,6 +17,13 @@ in
   };
 
   config = {
+    programs = lib.mkIf config.graphical.enable {
+      vicinae = {
+        enable = true;
+        systemd.enable = true;
+      };
+    };
+
     xdg.userDirs = {
       enable = true;
       publicShare = "$HOME/media/public";
