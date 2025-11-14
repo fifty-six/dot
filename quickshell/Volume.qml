@@ -5,16 +5,17 @@ import QtQuick
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 
-Item { 
+Item {
     // I still don't get why I need this lowkey
-    implicitWidth: root.implicitWidth
     implicitHeight: root.implicitHeight
+
+    Layout.preferredWidth: rows.implicitWidth
 
     Module {
         id: root
         color: text.color
 
-        RowLayout { 
+        RowLayout {
             id: rows
 
             Layout.alignment: Qt.AlignHCenter
@@ -44,11 +45,9 @@ Item {
                 source: Quickshell.iconPath("audio-volume-high-symbolic")
                 implicitSize: 12
 
-                ColorOverlay {
-                    anchors.fill: parent
-                    source: parent
-                    color: "#a3be8c"
-                }
+
+                layer.enabled: true
+                layer.effect: ColorOverlay { color: text.color }
             }
 
         }
@@ -61,9 +60,9 @@ Item {
 
     MouseArea {
         anchors.fill: root
-        onWheel: function (e) {
-            // yes it is in fact 10k to make this not explode your ears if you slightly scroll
-            Pipewire.defaultAudioSink.audio.volume += e.angleDelta.y / 10000;
+        onWheel: e => {
+            // yes it is in fact 5k to make this not explode your ears if you slightly scroll
+            Pipewire.defaultAudioSink.audio.volume += e.angleDelta.y / 5000;
         }
     }
 }
