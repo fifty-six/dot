@@ -4,19 +4,20 @@ let
     url = "https://github.com/reizumii/parfait/archive/refs/tags/v0.8.zip";
     hash = "sha256-lx4ByjLDp4SoZuyGk5y3aKem2vp7ilCZ4Vnb6lejHKw=";
   };
-in {
+in
+{
   programs.firefox = {
     enable = true;
     profiles.default = {
       settings = {
-        /* --- enable userchrome theming --- */
+        # --- enable userchrome theming ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "svg.context-properties.content.enabled" = true;
 
-        /* --- revert sidebar position to left --- */
+        # --- revert sidebar position to left ---
         "sidebar.position_start" = true;
 
-        /* --- set default parfait preferences --- */
+        # --- set default parfait preferences ---
 
         /* general */
         "parfait.animations.enabled" = true;
@@ -43,11 +44,11 @@ in {
         "parfait.toolbar.sidebar-gutter" = true;
         "parfait.toolbar.unified-sidebar" = true;
 
-        /* traffic lights */
+        # traffic lights
         "parfait.traffic-lights.enabled" = false;
         "parfait.traffic-lights.mono" = false;
 
-        /* url bar */
+        # url bar
         "parfait.urlbar.url.center" = false;
         "parfait.urlbar.results.compact" = false;
         "parfait.urlbar.search-mode.glow" = true;
@@ -55,14 +56,15 @@ in {
         /* window */
         "parfait.window.borderless" = false;
 
-        /* new tab */
+        # new tab
         "parfait.new-tab.logo" = 1;
         "parfait.new-tab.bg.pattern" = false;
       };
 
       userChrome = ''@import "parfait/userChrome.css";'';
       userContent = ''@import "parfait/userContent.css";'';
-    };};
+    };
+  };
 
   home.file.parfait = {
     source = parfait;

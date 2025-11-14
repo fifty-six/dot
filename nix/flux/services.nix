@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   services.zwave-js-ui = {
     enable = true;
@@ -31,27 +36,33 @@
   # };
 
   services.postgresql = {
-    settings.shared_preload_libraries = [ "vchord.so" "vectors.so" ];
-    extensions = with pkgs; [ postgresql16Packages.vectorchord postgresql16Packages.pgvecto-rs postgresql16Packages.pgvector ];
+    settings.shared_preload_libraries = [
+      "vchord.so"
+      "vectors.so"
+    ];
+    extensions = with pkgs; [
+      postgresql16Packages.vectorchord
+      postgresql16Packages.pgvecto-rs
+      postgresql16Packages.pgvector
+    ];
   };
 
   services.mosquitto = {
     enable = true;
     listeners = [
       {
-        acl = ["pattern readwrite #"];
+        acl = [ "pattern readwrite #" ];
         omitPasswordAuth = true;
         settings.allow_anonymous = true;
       }
     ];
   };
 
-
   age.secrets.frpc = {
     file = ../secrets/frpc.age;
   };
 
-  systemd.services.frp.serviceConfig= {
+  systemd.services.frp.serviceConfig = {
     LoadCredential = [
       "token:${config.age.secrets.frpc.path}"
     ];
@@ -160,7 +171,7 @@
   services.immich = {
     enable = true;
     secretsFile = "/var/lib/immich.d/.env";
-    accelerationDevices =  null;
+    accelerationDevices = null;
 
     host = "0.0.0.0";
 

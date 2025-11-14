@@ -22,25 +22,25 @@
       nix-darwin,
       home-manager,
       nixos-cli,
-      agenix
+      agenix,
     }:
     let
       linux = nixpkgs.legacyPackages."x86_64-linux";
     in
     {
       nixosConfigurations.flux = nixpkgs.lib.nixosSystem {
-       system = "x86_64-linux";
-       modules = [
-       	 ./nix/flux/configuration.nix
-         nixos-cli.nixosModules.nixos-cli
-	       home-manager.nixosModules.home-manager
-         {
-           home-manager.useGlobalPkgs = true;
-           home-manager.useUserPackages = true;
-           home-manager.users.toor = ./nix/flux/toor.nix;
-         }
-         agenix.nixosModules.default
-       ];
+        system = "x86_64-linux";
+        modules = [
+          ./nix/flux/configuration.nix
+          nixos-cli.nixosModules.nixos-cli
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.toor = ./nix/flux/toor.nix;
+          }
+          agenix.nixosModules.default
+        ];
       };
 
       homeConfigurations."home@framework" = home-manager.lib.homeManagerConfiguration {
