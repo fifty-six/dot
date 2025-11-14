@@ -12,16 +12,6 @@ ColumnLayout {
     property color color;
     property alias backgroundColor: rect.color;
 
-    Component.onCompleted: {
-        if (this.content.length == 0) {
-            return;
-        }
-
-        // if (color === undefined) {
-        //     color = content[0].color ? Qt.binding(() => content[0].color) : "white";
-        // }
-    }
-
     Rectangle {
         id: rect
 
@@ -29,20 +19,12 @@ ColumnLayout {
 
         color: "transparent";
 
-        Component.onCompleted: {
-            let h = 0;
-            let w = 0;
+        implicitHeight: {
+            return rect.children.reduce((a, b) => a + b.implicitHeight, 0);
+        }
 
-            for (let child of rect.children) {
-                child.anchors.verticalCenter = rect.verticalCenter;
-                child.anchors.horizontalCenter = rect.horizontalCenter;
-
-                h += child.implicitHeight;
-                w = Math.max(w, child.implicitWidth);
-            }
-
-            implicitHeight = h;
-            implicitWidth = w + root.horizontalPadding;
+        implicitWidth: {
+            return Math.max(...rect.children.map(x => x.implicitWidth));
         }
     }
 
