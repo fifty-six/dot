@@ -24,7 +24,7 @@ Item {
                 id: text
 
                 color: {
-                    return "#a3be8c";
+                    return Pipewire.defaultAudioSink?.audio.muted ? "#3b4252" : "#b48ead";
                 }
 
                 text: {
@@ -37,7 +37,12 @@ Item {
             }
 
             IconImage {
-                source: Quickshell.iconPath("audio-volume-high-symbolic")
+                Layout.alignment: Qt.AlignVCenter
+
+                source: Pipewire.defaultAudioSink?.audio.muted
+                    ? Quickshell.iconPath("audio-volume-muted-symbolic")
+                    : Quickshell.iconPath("audio-volume-high-symbolic")
+
                 implicitSize: 12
 
 
@@ -49,12 +54,22 @@ Item {
     }
 
     PwObjectTracker {
-        objects: [ Pipewire.defaultAudioSink, Pipewire.defaultAudioSource]
+        objects: [ Pipewire.defaultAudioSink, Pipewire.defaultAudioSource ]
     }
 
 
     MouseArea {
         anchors.fill: root
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        onClicked: e => {
+            if (e.button == Qt.RightButton) {
+                Pipewire.defaultAudioSink.audio.muted = !Pipewire.defaultAudioSink.audio.muted;
+            } else {
+                Quickshell.execDetached(["pavucontrol"])
+            }
+        }
+
         onWheel: e => {
             // yes it is in fact 5k to make this not explode your ears if you slightly scroll
             Pipewire.defaultAudioSink.audio.volume += e.angleDelta.y / 5000;
