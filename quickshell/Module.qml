@@ -8,7 +8,7 @@ ColumnLayout {
     Layout.alignment: Qt.AlignBottom
 
     default property alias content: rect.data
-    property int horizontalPadding: 10;
+    property int horizontalPadding: 0;
     property color color;
     property alias backgroundColor: rect.color;
 
@@ -21,8 +21,8 @@ ColumnLayout {
         //     color = content[0].color ? Qt.binding(() => content[0].color) : "white";
         // }
     }
-    
-    Rectangle { 
+
+    Rectangle {
         id: rect
 
         Layout.alignment: Qt.AlignHCenter
@@ -51,14 +51,9 @@ ColumnLayout {
         implicitHeight: 2;
         color: root.color;
 
-        Component.onCompleted: {
-            if (root.content.length == 0) {
-                return;
-            }
-
+        implicitWidth: {
             let w = Math.max(...root.content.map(x => x.implicitWidth ?? 0));
-
-            this.implicitWidth = w + root.horizontalPadding;
+            return w + root.horizontalPadding;
         }
     }
 }
