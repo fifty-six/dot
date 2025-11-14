@@ -43,7 +43,7 @@ Module {
             source: {
                 let percent = Math.round(UPower.displayDevice.percentage * 10) * 10;
 
-                let powered = UPower.onBattery ? "" : "-charging";
+                let powered = UPower.onBattery ? "" : (percent == 100 ? "-charged" : "-charging");
 
                 return `image://icon/battery-level-${percent}${powered}-symbolic`;
             }
