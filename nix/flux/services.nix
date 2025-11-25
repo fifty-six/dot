@@ -47,6 +47,20 @@
   };
 
 
+  age.secrets.frpc = {
+    file = ../secrets/frpc.age;
+  };
+
+  systemd.services.frp.serviceConfig= {
+    LoadCredential = [
+      "token:${config.age.secrets.frpc.path}"
+    ];
+
+    Environment = [
+      "FRPC_TOKEN_FILE=%d/token"
+    ];
+  };
+
   services.frp = {
     enable = true;
     role = "client";
@@ -57,7 +71,8 @@
       loginFailExit = false;
 
       auth.method = "token";
-      auth.token = "redacted";
+      auth.tokenSource.type = "file";
+      auth.tokenSource.file.path = "{{ .Envs.FRPC_TOKEN_FILE }}";
 
       proxies = [
         {

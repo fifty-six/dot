@@ -12,6 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-cli.url = "github:nix-community/nixos-cli";
+    agenix.url = "github:yaxitech/ragenix";
   };
 
   outputs =
@@ -21,6 +22,7 @@
       nix-darwin,
       home-manager,
       nixos-cli,
+      agenix
     }:
     let
       linux = nixpkgs.legacyPackages."x86_64-linux";
@@ -37,6 +39,7 @@
            home-manager.useUserPackages = true;
            home-manager.users.toor = ./nix/flux/toor.nix;
          }
+         agenix.nixosModules.default
        ];
       };
 
@@ -45,12 +48,6 @@
 
         modules = [ ./nix/framework/home.nix ];
       };
-
-      # homeConfigurations."toor@flux" = home-manager.lib.homeManagerConfiguration {
-      #   pkgs = linux;
-
-      #   modules = [ ./nix/flux/toor.nix ];
-      # };
 
       homeConfigurations."home@vessel" = home-manager.lib.homeManagerConfiguration {
         pkgs = linux;
