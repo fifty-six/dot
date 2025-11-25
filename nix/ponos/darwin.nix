@@ -73,6 +73,7 @@
       "shadowsocksx-ng"
       "gimp"
       "krita"
+      "gdisk"
     ];
     masApps = {
       "Wireguard" = 1451685025;

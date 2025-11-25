@@ -32,6 +32,8 @@
     pkgs.lua-language-server
     pkgs.mosh
     pkgs.imagemagick
+    pkgs.ddrescue
+    pkgs.hyfetch
   ];
 
   programs.kitty.settings.macos_option_as_alt = "both";
