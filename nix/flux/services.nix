@@ -119,7 +119,7 @@
     enable = true;
 
     settings = {
-      PORT = "3003";
+      PORT = "3005";
     };
   };
 
