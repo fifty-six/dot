@@ -14,15 +14,21 @@ in
   home.stateVersion = "25.11";
 
   home.packages = [
-    pkgs.nixd
+    pkgs.bat
+
     pkgs.ntfy-sh
+    pkgs.jujutsu
     pkgs.jjui
     pkgs.comma
-    pkgs.nix-output-monitor
     pkgs.basedpyright
-    pkgs.alejandra
     pkgs.eza
+
     pkgs.nixfmt
+    pkgs.alejandra
+    pkgs.nixd
+
+    pkgs.nix-output-monitor
+    pkgs.nvd
   ];
 
   home.file = {
