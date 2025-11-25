@@ -11,8 +11,7 @@
   ];
 
   home.packages = [
-    pkgs.arion
-    pkgs.neovim
+    pkgs.tree
   ];
 
   home.username = "toor";

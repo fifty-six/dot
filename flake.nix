@@ -11,6 +11,7 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-cli.url = "github:nix-community/nixos-cli";
   };
 
   outputs =
@@ -19,22 +20,37 @@
       nixpkgs,
       nix-darwin,
       home-manager,
+      nixos-cli,
     }:
     let
       linux = nixpkgs.legacyPackages."x86_64-linux";
     in
     {
+      nixosConfigurations.flux = nixpkgs.lib.nixosSystem {
+       system = "x86_64-linux";
+       modules = [
+       	 ./nix/flux/configuration.nix
+         nixos-cli.nixosModules.nixos-cli
+	       home-manager.nixosModules.home-manager
+         {
+           home-manager.useGlobalPkgs = true;
+           home-manager.useUserPackages = true;
+           home-manager.users.toor = ./nix/flux/toor.nix;
+         }
+       ];
+      };
+
       homeConfigurations."home@framework" = home-manager.lib.homeManagerConfiguration {
         pkgs = linux;
 
         modules = [ ./nix/framework/home.nix ];
       };
 
-      homeConfigurations."toor@flux" = home-manager.lib.homeManagerConfiguration {
-        pkgs = linux;
+      # homeConfigurations."toor@flux" = home-manager.lib.homeManagerConfiguration {
+      #   pkgs = linux;
 
-        modules = [ ./nix/flux/toor.nix ];
-      };
+      #   modules = [ ./nix/flux/toor.nix ];
+      # };
 
       homeConfigurations."home@vessel" = home-manager.lib.homeManagerConfiguration {
         pkgs = linux;
