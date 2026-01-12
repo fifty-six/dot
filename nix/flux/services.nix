@@ -244,6 +244,19 @@
     openFirewall = true;
   };
 
+  services.immich-public-proxy = {
+    enable = true;
+
+    port = 3007;
+    openFirewall = true;
+
+    immichUrl = "https://immich.in.fiftysix.dev";
+    settings = {
+      # Allow downloading all if the immich share allows it
+      ipp.allowDownloadAll = 1;
+    };
+  };
+
   services.pocket-id = {
     enable = true;
 
