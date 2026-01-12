@@ -18,4 +18,14 @@ in
     publicKeys = keys;
     armor = true;
   };
+
+  "restic_remote.age" = {
+    publicKeys = keys;
+    armor = true;
+  };
+
+  "restic_remote_auth.age" = {
+    publicKeys = keys;
+    armor = true;
+  };
 }
