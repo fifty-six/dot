@@ -1,5 +1,11 @@
 .jj
+
 bin/ha_secrets.py
+
 __pycache__
+
 # bro what the fuck
 nu/history.txt
+
+# nix provides a link to the store here
+result
