@@ -35,7 +35,6 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.toor = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
@@ -64,11 +63,12 @@
     podman
 
     tmux
-    ripgrep # ?
+    ripgrep
     dig
 
     uv
-    gnumake # moyai
+    # Some python wheels need make
+    gnumake
 
     hyfetch
 
