@@ -5,6 +5,72 @@
   ...
 }:
 {
+  services.syncthing =
+    let
+      mkDevice =
+        {
+          name,
+          id,
+        }:
+        {
+          ${name} = {
+            inherit id;
+            addresses = [
+              "tcp://${name}"
+              "dynamic"
+            ];
+          };
+        };
+
+      devices = [
+        {
+          name = "ponos";
+          id = "IJYDT5J-65BVWJK-DYJSBBU-MSBTARX-BLP5WLC-2U2EN23-3YFRNHL-IVJ7WAD";
+        }
+        {
+          name = "vessel";
+          id = "OVRWTSF-V4ZZIFE-IISOWJF-KBVV22J-2IT5B47-HXFXHEX-PU7YOLU-W72TJQK";
+        }
+        {
+          name = "framework";
+          id = "WNI2AOE-FAQYTXS-TCGFOMY-MUSC6TY-2Z6JPY3-UXWQSFB-RQZL32U-VUJHQQS";
+        }
+        {
+          name = "bupropion";
+          id = "JPIOOUD-SP2JCJ4-FR5MEHE-VNTMU27-WYWVQNR-7EVRJ2S-6MSUIVN-LRMUJQ2";
+        }
+      ];
+
+      allNames = map ({ name, ... }: name) devices;
+    in
+    {
+      enable = true;
+      user = "toor";
+
+      dataDir = "/home/toor";
+
+      settings.devices = lib.mkMerge (map mkDevice devices);
+
+      settings.folders = {
+        "~/sync" = {
+          id = "fb4vv-9ahvz";
+          devices = allNames;
+        };
+        "~/src/wiki" = {
+          id = "obsidian";
+          devices = [
+            "bupropion"
+            "framework"
+            "vessel"
+          ];
+        };
+        "~/wsync" = {
+          id = "ksp4f-p2odo";
+          devices = allNames;
+        };
+      };
+    };
+
   services.zwave-js-ui = {
     enable = true;
     serialPort = "/dev/serial/by-id/usb-Zooz_800_Z-Wave_Stick_533D004242-if00";
