@@ -11,6 +11,7 @@
     ./services.nix
     ./services/blocky.nix
     ./services/ha.nix
+    ./services/restic.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

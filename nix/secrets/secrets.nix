@@ -13,4 +13,9 @@ in
     publicKeys = keys;
     armor = true;
   };
+
+  "restic.age" = {
+    publicKeys = keys;
+    armor = true;
+  };
 }
