@@ -38,9 +38,12 @@
               "-u postgres"
               "${pkgs.postgresql}/bin/pg_dumpall"
           ];
+
           extraBackupArgs = [
             "--tag database"
+            "--retry-lock"
           ];
+
           pruneOpts = [
             "--keep-daily 14"
               "--keep-weekly 4"
@@ -50,6 +53,10 @@
         };
         files = {
           initialize = true;
+
+          extraBackupArgs = [
+            "--retry-lock"
+          ];
 
           exclude = [
             "/home/*/.cache"
