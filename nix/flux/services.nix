@@ -238,6 +238,15 @@
   #   };
   # };
 
+  services.openssh = {
+    enable = true;
+
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
   services.immich = {
     enable = true;
     secretsFile = "/var/lib/immich.d/.env";

@@ -85,7 +85,6 @@
 
   programs.nix-ld.enable = true;
 
-  services.openssh.enable = true;
   services.tailscale.enable = true;
   networking.nameservers = [ "localhost" ];
   services.resolved = {
