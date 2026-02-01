@@ -74,6 +74,7 @@
               "/srv/ha-loc"
               "/srv/SixtyFive"
               "/srv/typst-bot"
+              "/srv/gonic"
               "/var/lib/forgejo"
               "/home"
             ];
