@@ -168,6 +168,14 @@
           remotePort = 443;
           transport.proxyProtocolVersion = "v2";
         }
+        {
+          name = "forgejo-ssh";
+          type = "tcp";
+          localIP = "localhost";
+          localPort = 2222;
+          remotePort = 22;
+          transport.proxyProtocolVersion = "v2";
+        }
       ];
     };
   };
@@ -194,7 +202,6 @@
     };
   };
 
-  # gotta figure out secrets, see izzy's config?
   services.forgejo = {
     enable = true;
     settings = {
@@ -204,10 +211,10 @@
         HTTP_PORT = 3001;
         SSH_PORT = 2222;
         START_SSH_SERVER = true;
+        SSH_SERVER_USE_PROXY_PROTOCOL = true;
       };
 
       service.DISABLE_REGISTRATION = true;
-
     };
   };
 
