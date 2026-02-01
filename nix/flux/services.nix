@@ -257,13 +257,6 @@
     };
   };
 
-  services.pocket-id = {
-    enable = true;
-
-    settings.TRUST_PROXY = true;
-    settings.APP_URL = "https://pid.fiftysix.dev";
-  };
-
   services.ntfy-sh = {
     enable = true;
     settings.base-url = "https://ntfy.in.fiftysix.dev";
