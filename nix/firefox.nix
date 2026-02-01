@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   parfait = pkgs.fetchzip {
     url = "https://github.com/reizumii/parfait/archive/refs/tags/v0.8.zip";
@@ -81,19 +86,20 @@ in
   # So, replace profiles.ini with a r/w copy of it on activation.
   #
   home.activation = lib.mkIf config.graphical.enable {
-    firefoxProfiles = let
-      path = "${config.home.homeDirectory}/.mozilla/firefox/profiles.ini";
-    in
+    firefoxProfiles =
+      let
+        path = "${config.home.homeDirectory}/.mozilla/firefox/profiles.ini";
+      in
       lib.hm.dag.entryAfter
-      [
-        "writeBoundary"
-        "linkGeneration"
-      ]
-      ''
-        run mv ${path} ${path}.hm
-        run cp "`readlink ${path}.hm`" ${path}
-        run rm -f ${path}.$HOME_MANAGER_BACKUP_EXT
-        run chmod u+w ${path}
-      '';
+        [
+          "writeBoundary"
+          "linkGeneration"
+        ]
+        ''
+          run mv ${path} ${path}.hm
+          run cp "`readlink ${path}.hm`" ${path}
+          run rm -f ${path}.$HOME_MANAGER_BACKUP_EXT
+          run chmod u+w ${path}
+        '';
   };
 }
