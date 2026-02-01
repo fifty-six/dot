@@ -232,19 +232,6 @@
     browser.enable = false;
   };
 
-  # todo: this doesn't like our olm.
-  # systemd.services.notify-matrix = {
-  #   Unit = {
-  #     Description = "Matrix reaction notifier";
-  #   };
-  #   Install = {
-  #     WantedBy = [ "multi-user.target" ];
-  #   };
-  #   Service = {
-  #     ExecStart = "${pkgs.uv} run /srv/notify-matrix";
-  #   };
-  # };
-
   services.openssh = {
     enable = true;
 
