@@ -17,7 +17,7 @@
         customTTL = "300s";
         filterUnmappedTypes = true;
         mapping = {
-          "in.fiftysix.dev" = "100.75.192.17";
+          "in.fiftysix.dev" = "100.117.83.6";
         };
       };
 
