@@ -90,7 +90,11 @@
   networking.nameservers = [ "localhost" ];
   services.resolved = {
     enable = true;
-    extraConfig = "DNSStubListener=no";
+    settings = {
+      Resolve = {
+        DNSStubListener = false;
+      };
+    };
   };
 
   # :(
@@ -103,6 +107,7 @@
     enable = true;
     config = {
       apply.use_nom = true;
+      apply.reexec_as_root = true;
       use_nvd = true;
     };
   };
@@ -117,6 +122,10 @@
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "toor"
   ];
   nixpkgs.config.allowUnfree = true;
 

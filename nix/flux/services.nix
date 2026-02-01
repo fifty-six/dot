@@ -128,7 +128,7 @@
     file = ../secrets/frpc.age;
   };
 
-  systemd.services.frp.serviceConfig = {
+  systemd.services.frp-client.serviceConfig = {
     LoadCredential = [
       "token:${config.age.secrets.frpc.path}"
     ];
@@ -138,7 +138,7 @@
     ];
   };
 
-  services.frp = {
+  services.frp.instances."client" = {
     enable = true;
     role = "client";
     settings = {
