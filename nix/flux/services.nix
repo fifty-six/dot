@@ -195,17 +195,21 @@
   };
 
   # gotta figure out secrets, see izzy's config?
-  # services.forgejo = {
-  #   enable = true;
-  #   settings = {
-  #     server = {
-  #       DOMAIN = "forge.fiftysix.dev";
-  #       ROOT_URL = "https://forge.fiftysix.dev";
-  #       HTTP_PORT = 3001;
-  #       SSH_PORT = 2222;
-  #     };
-  #   };
-  # };
+  services.forgejo = {
+    enable = true;
+    settings = {
+      server = {
+        DOMAIN = "forge.fiftysix.dev";
+        ROOT_URL = "https://forge.fiftysix.dev";
+        HTTP_PORT = 3001;
+        SSH_PORT = 2222;
+        START_SSH_SERVER = true;
+      };
+
+      service.DISABLE_REGISTRATION = true;
+
+    };
+  };
 
   services.uptime-kuma = {
     enable = true;
